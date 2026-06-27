@@ -1,0 +1,2379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Job Card System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 12px 12px 30px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .container {
+            background: white;
+            max-width: 500px;
+            width: 100%;
+            border-radius: 20px;
+            padding: 16px 14px 24px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+            margin-top: 6px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 14px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .header h1 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .header p {
+            color: #718096;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        /* ===== COMPACT DASHBOARD ===== */
+        .dashboard-header-compact {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 8px 12px;
+            background: #f7fafc;
+            border-radius: 14px;
+        }
+
+        .user-info-compact {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-avatar-compact {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 15px;
+            text-transform: uppercase;
+            flex-shrink: 0;
+        }
+
+        .user-details-compact {
+            line-height: 1.2;
+        }
+
+        .user-name-compact {
+            font-weight: 700;
+            color: #2d3748;
+            font-size: 14px;
+        }
+
+        .user-contact-compact {
+            font-size: 10px;
+            color: #718096;
+        }
+
+        .user-status-compact {
+            font-size: 9px;
+            padding: 1px 8px;
+            border-radius: 10px;
+            display: inline-block;
+            font-weight: 600;
+            margin-top: 1px;
+        }
+
+        .user-status-compact.approved {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+
+        .user-status-compact.pending {
+            background: #fefcbf;
+            color: #744210;
+        }
+
+        .user-status-compact.rejected {
+            background: #fed7d7;
+            color: #742a2a;
+        }
+
+        .logout-btn-compact {
+            padding: 5px 12px;
+            background: linear-gradient(135deg, #fc8181 0%, #e53e3e 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .logout-btn-compact:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(229, 62, 62, 0.3);
+        }
+
+        .logout-btn-compact:active {
+            transform: scale(0.95);
+        }
+
+        .welcome-compact {
+            text-align: center;
+            padding: 6px 0 10px;
+        }
+
+        .welcome-compact h2 {
+            color: #2d3748;
+            font-size: 16px;
+        }
+
+        .welcome-compact p {
+            color: #718096;
+            font-size: 11px;
+            margin-top: 2px;
+        }
+
+        .quick-actions-compact {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 6px;
+            margin-top: 8px;
+            margin-bottom: 10px;
+        }
+
+        .quick-action-btn-compact {
+            padding: 10px 4px;
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+            border: 1.5px solid #e2e8f0;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quick-action-btn-compact:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            border-color: #667eea;
+        }
+
+        .quick-action-btn-compact:active {
+            transform: scale(0.95);
+            background: #edf2f7;
+        }
+
+        .quick-action-btn-compact .icon {
+            font-size: 20px;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .quick-action-btn-compact .label {
+            font-size: 10px;
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        /* ===== TABS ===== */
+        .tabs {
+            display: flex;
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+            border-radius: 12px;
+            padding: 4px;
+            margin-bottom: 20px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.04);
+        }
+
+        .tab {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            border: none;
+            background: transparent;
+            font-size: 14px;
+            font-weight: 600;
+            color: #718096;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .tab:active {
+            transform: scale(0.96);
+        }
+
+        /* ===== FORM ===== */
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .form-row .form-group {
+            margin-bottom: 0;
+        }
+
+        label {
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 3px;
+            letter-spacing: 0.3px;
+        }
+
+        .required {
+            color: #e53e3e;
+            margin-left: 2px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px 12px;
+            font-size: 14px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            background: #f7fafc;
+            color: #2d3748;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        input::placeholder {
+            color: #a0aec0;
+            font-size: 13px;
+        }
+
+        input:read-only {
+            background: #f0fff4;
+            border-color: #48bb78;
+            color: #22543d;
+        }
+
+        select {
+            -webkit-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%234a5568' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 32px;
+            cursor: pointer;
+        }
+
+        .password-toggle {
+            position: relative;
+        }
+
+        .password-toggle input {
+            padding-right: 40px;
+        }
+
+        .toggle-btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            color: #718096;
+            padding: 4px;
+        }
+
+        .toggle-btn:hover {
+            color: #2d3748;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 6px;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.35);
+            letter-spacing: 0.3px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.45);
+        }
+
+        .submit-btn:active {
+            transform: scale(0.98);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            transform: scale(1);
+        }
+
+        .submit-btn.secondary {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            box-shadow: 0 4px 12px rgba(72, 187, 120, 0.35);
+        }
+
+        .submit-btn.secondary:hover {
+            box-shadow: 0 6px 20px rgba(72, 187, 120, 0.45);
+        }
+
+        .btn-cancel {
+            width: 100%;
+            padding: 12px;
+            background: #e2e8f0;
+            color: #475569;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 6px;
+        }
+
+        .btn-cancel:hover {
+            background: #cbd5e1;
+        }
+
+        .btn-cancel:active {
+            transform: scale(0.98);
+        }
+
+        .hint-text {
+            font-size: 10px;
+            color: #718096;
+            margin-top: 2px;
+        }
+
+        .auto-generated {
+            background: #f0fff4 !important;
+            border-color: #48bb78 !important;
+            color: #22543d !important;
+        }
+
+        .lookup-success {
+            background: #f0fff4 !important;
+            border-color: #48bb78 !important;
+            color: #22543d !important;
+        }
+
+        .lookup-error {
+            background: #fff5f5 !important;
+            border-color: #fc8181 !important;
+            color: #742a2a !important;
+        }
+
+        .lookup-loading {
+            background: #fffbeb !important;
+            border-color: #f6ad55 !important;
+            color: #744210 !important;
+        }
+
+        /* ===== MESSAGE ===== */
+        .message {
+            display: none;
+            padding: 10px 14px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 600;
+            margin-top: 10px;
+            animation: slideUp 0.4s ease;
+            word-wrap: break-word;
+            white-space: pre-line;
+            font-size: 13px;
+        }
+
+        .message.success {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+        }
+
+        .message.error {
+            background: linear-gradient(135deg, #fc8181 0%, #e53e3e 100%);
+            color: white;
+        }
+
+        .message.info {
+            background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
+            color: white;
+        }
+
+        .message.warning {
+            background: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%);
+            color: white;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .loading {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            border: 2.5px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 0.7s ease infinite;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .form-footer {
+            text-align: center;
+            margin-top: 12px;
+            font-size: 13px;
+            color: #718096;
+        }
+
+        .form-footer a {
+            color: #667eea;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .form-footer a:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+
+        /* ===== DATA ENTRY SECTION ===== */
+        .data-entry-section {
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .data-entry-section h3 {
+            color: #2d3748;
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+
+        /* ===== MODAL ===== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            padding: 20px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal {
+            background: white;
+            max-width: 400px;
+            width: 100%;
+            border-radius: 20px;
+            padding: 20px;
+            animation: slideUp 0.3s ease;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .modal-header h3 {
+            color: #2d3748;
+            font-size: 18px;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 22px;
+            cursor: pointer;
+            color: #718096;
+            padding: 2px 6px;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: #2d3748;
+            transform: rotate(90deg);
+        }
+
+        /* ===== PHOTO UPLOAD WITH CROPPER ===== */
+        .photo-attach-area {
+            border: 2px dashed #e2e8f0;
+            border-radius: 10px;
+            padding: 14px;
+            text-align: center;
+            transition: all 0.3s ease;
+            background: #f7fafc;
+            min-height: 110px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .photo-attach-area.has-photo {
+            border-color: #48bb78;
+            background: #f0fff4;
+        }
+
+        .photo-attach-area .photo-icon {
+            font-size: 36px;
+            margin-bottom: 3px;
+        }
+
+        .photo-attach-area .photo-text {
+            color: #718096;
+            font-size: 13px;
+        }
+
+        .photo-attach-area .photo-sub-text {
+            color: #a0aec0;
+            font-size: 10px;
+            margin-top: 2px;
+        }
+
+        .photo-attach-area .photo-preview-img {
+            max-width: 100%;
+            max-height: 140px;
+            border-radius: 6px;
+            margin-top: 6px;
+            object-fit: contain;
+        }
+
+        .photo-attach-area .remove-photo-btn {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            background: #fc8181;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            font-size: 14px;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        .photo-attach-area.has-photo .remove-photo-btn {
+            display: flex;
+        }
+
+        .photo-attach-area .photo-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .photo-attach-area .photo-actions button {
+            padding: 6px 14px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .photo-attach-area .btn-camera {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .photo-attach-area .btn-gallery {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+        }
+
+        .photo-attach-area .photo-actions button:hover {
+            transform: scale(1.04);
+        }
+
+        .photo-attach-area .photo-actions button:active {
+            transform: scale(0.95);
+        }
+
+        .photo-attach-area input[type="file"] {
+            display: none;
+        }
+
+        .photo-status {
+            font-size: 11px;
+            color: #718096;
+            margin-top: 4px;
+            display: none;
+        }
+
+        .photo-status.active {
+            display: block;
+        }
+
+        .photo-status.attached {
+            color: #48bb78;
+        }
+
+        .photo-status.error {
+            color: #fc8181;
+        }
+
+        /* ===== CROPPER MODAL ===== */
+        .cropper-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.85);
+            z-index: 2000;
+            padding: 16px;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .cropper-overlay.show {
+            display: flex;
+        }
+
+        .cropper-container {
+            background: #1a202c;
+            border-radius: 16px;
+            max-width: 480px;
+            width: 100%;
+            max-height: 90vh;
+            overflow: hidden;
+            position: relative;
+            padding: 16px;
+        }
+
+        .cropper-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            margin-bottom: 12px;
+        }
+
+        .cropper-header h3 {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .cropper-header .close-cropper {
+            background: none;
+            border: none;
+            color: #fc8181;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 0 8px;
+        }
+
+        .cropper-wrapper {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            border-radius: 8px;
+            background: #2d3748;
+            touch-action: none;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .cropper-wrapper img {
+            display: block;
+            width: 100%;
+            height: auto;
+            pointer-events: none;
+        }
+
+        /* Crop Box Overlay */
+        .crop-box {
+            position: absolute;
+            border: 2px solid #48bb78;
+            box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
+            cursor: move;
+            touch-action: none;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .crop-box .crop-handle {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: #48bb78;
+            border: 2px solid white;
+            border-radius: 50%;
+        }
+
+        .crop-box .crop-handle.nw { top: -8px; left: -8px; cursor: nw-resize; }
+        .crop-box .crop-handle.ne { top: -8px; right: -8px; cursor: ne-resize; }
+        .crop-box .crop-handle.sw { bottom: -8px; left: -8px; cursor: sw-resize; }
+        .crop-box .crop-handle.se { bottom: -8px; right: -8px; cursor: se-resize; }
+        .crop-box .crop-handle.n { top: -8px; left: 50%; transform: translateX(-50%); cursor: n-resize; }
+        .crop-box .crop-handle.s { bottom: -8px; left: 50%; transform: translateX(-50%); cursor: s-resize; }
+        .crop-box .crop-handle.w { top: 50%; left: -8px; transform: translateY(-50%); cursor: w-resize; }
+        .crop-box .crop-handle.e { top: 50%; right: -8px; transform: translateY(-50%); cursor: e-resize; }
+
+        .crop-info {
+            color: white;
+            font-size: 12px;
+            text-align: center;
+            padding: 8px 0;
+            opacity: 0.7;
+        }
+
+        .cropper-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .cropper-actions button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .cropper-actions .btn-crop-cancel {
+            background: #4a5568;
+            color: white;
+        }
+
+        .cropper-actions .btn-crop-cancel:hover {
+            background: #2d3748;
+        }
+
+        .cropper-actions .btn-crop-apply {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+        }
+
+        .cropper-actions .btn-crop-apply:hover {
+            transform: scale(1.02);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 480px) {
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+            
+            .form-row .form-group {
+                margin-bottom: 12px;
+            }
+            
+            .container {
+                padding: 14px 12px 20px;
+            }
+            
+            input, select {
+                font-size: 14px;
+                padding: 10px 12px;
+            }
+            
+            .quick-actions-compact {
+                grid-template-columns: 1fr 1fr;
+                gap: 6px;
+            }
+            
+            .quick-action-btn-compact {
+                padding: 8px 4px;
+            }
+            
+            .quick-action-btn-compact .icon {
+                font-size: 18px;
+            }
+
+            .photo-attach-area .photo-actions {
+                flex-direction: column;
+            }
+
+            .photo-attach-area .photo-actions button {
+                width: 100%;
+            }
+
+            .cropper-container {
+                padding: 12px;
+            }
+
+            .crop-box .crop-handle {
+                width: 20px;
+                height: 20px;
+            }
+        }
+
+        @media (min-width: 481px) and (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="app">
+        <!-- Auth Section -->
+        <div id="authSection">
+            <div class="header">
+                <h1>🔐 Job Card System</h1>
+                <p>Sign in to your account or create a new one</p>
+            </div>
+
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('signin')" id="signinTab">Sign In</button>
+                <button class="tab" onclick="switchTab('signup')" id="signupTab">Sign Up</button>
+            </div>
+
+            <!-- Sign In Form -->
+            <div id="signinForm">
+                <form onsubmit="return handleSignIn(event)" id="signinFormElement">
+                    <div class="form-group">
+                        <label>Mobile Number <span class="required">*</span></label>
+                        <input type="tel" id="signinMobile" placeholder="Enter 10-digit mobile number" pattern="\d{10}" maxlength="10" required>
+                        <div class="hint-text">Enter the mobile number used during registration</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Password <span class="required">*</span></label>
+                        <div class="password-toggle">
+                            <input type="password" id="signinPassword" placeholder="Enter your password" required>
+                            <button type="button" class="toggle-btn" onclick="togglePassword('signinPassword')">👁️</button>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="signinBtn">
+                        <span id="signinBtnText">Sign In</span>
+                    </button>
+                </form>
+                <div class="form-footer">
+                    Don't have an account? <a href="#" onclick="switchTab('signup')">Sign Up</a>
+                </div>
+            </div>
+
+            <!-- Sign Up Form -->
+            <div id="signupForm" class="hidden">
+                <form onsubmit="return handleSignUp(event)" id="signupFormElement">
+                    <div class="form-group">
+                        <label>Full Name <span class="required">*</span></label>
+                        <input type="text" id="signupName" placeholder="Enter your full name" required autocomplete="name">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Contact Number <span class="required">*</span></label>
+                        <input type="tel" id="signupContact" placeholder="10-digit mobile number" pattern="\d{10}" maxlength="10" required>
+                        <div class="hint-text">Enter 10-digit mobile number</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Password <span class="required">*</span></label>
+                        <div class="password-toggle">
+                            <input type="password" id="signupPassword" placeholder="Min 6 characters" minlength="6" required>
+                            <button type="button" class="toggle-btn" onclick="togglePassword('signupPassword')">👁️</button>
+                        </div>
+                        <div class="hint-text">Must be at least 6 characters long</div>
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="signupBtn">
+                        <span id="signupBtnText">Create Account</span>
+                    </button>
+                </form>
+                <div class="form-footer">
+                    Already have an account? <a href="#" onclick="switchTab('signin')">Sign In</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Section -->
+        <div id="dashboardSection" class="hidden">
+            <!-- COMPACT HEADER -->
+            <div class="dashboard-header-compact">
+                <div class="user-info-compact">
+                    <div class="user-avatar-compact" id="userAvatarCompact">U</div>
+                    <div class="user-details-compact">
+                        <div class="user-name-compact" id="userNameCompact">User Name</div>
+                        <div class="user-contact-compact" id="userContactCompact">📱 9876543210</div>
+                        <span class="user-status-compact approved" id="userStatusBadgeCompact">Approved</span>
+                    </div>
+                </div>
+                <button class="logout-btn-compact" onclick="handleSignOut()">Logout</button>
+            </div>
+
+            <!-- COMPACT WELCOME -->
+            <div class="welcome-compact">
+                <h2>👋 Welcome, <span id="welcomeNameCompact">User</span>!</h2>
+                <p>You are successfully signed in</p>
+            </div>
+
+            <!-- COMPACT QUICK ACTIONS -->
+            <div class="quick-actions-compact">
+                <div class="quick-action-btn-compact" onclick="showDataEntry()">
+                    <span class="icon">📝</span>
+                    <span class="label">New Entry</span>
+                </div>
+                <div class="quick-action-btn-compact" onclick="showChangePassword()">
+                    <span class="icon">🔑</span>
+                    <span class="label">Change Pwd</span>
+                </div>
+                <div class="quick-action-btn-compact" onclick="viewMyEntries()">
+                    <span class="icon">📊</span>
+                    <span class="label">My Entries</span>
+                </div>
+                <div class="quick-action-btn-compact" onclick="showHelp()">
+                    <span class="icon">❓</span>
+                    <span class="label">Help</span>
+                </div>
+            </div>
+
+            <!-- Data Entry Section -->
+            <div id="dataEntrySection" class="data-entry-section hidden">
+                <h3>📋 New Job Card Entry</h3>
+                <form onsubmit="return submitJobCardData(event)" id="dataEntryForm">
+                    <!-- Hidden Unique Application Number -->
+                    <input type="hidden" name="UNIQUE_APPLICATION_NUMBER" id="uniqueApplicationNumber">
+
+                    <!-- Row 1: Name of Applicant -->
+                    <div class="form-group">
+                        <label>Name of Applicant of Job Card <span class="required">*</span></label>
+                        <input type="text" name="NAME_OF_APPLICANT" placeholder="Full name as per job card" required>
+                    </div>
+
+                    <!-- Row 2: Family Members Details -->
+                    <div class="form-group">
+                        <label>Family Members Details <span class="required">*</span></label>
+                        <input type="text" name="FAMILY_MEMBERS_DETAILS" placeholder="Family members with relation" required>
+                    </div>
+
+                    <!-- Row 3: Date of Birth + Gender -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Date of Birth <span class="required">*</span></label>
+                            <input type="date" name="DATE_OF_BIRTH" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Gender <span class="required">*</span></label>
+                            <select name="GENDER" required>
+                                <option value="">Select Gender</option>
+                                <option value="MALE">Male</option>
+                                <option value="FEMALE">Female</option>
+                                <option value="TRANS">Transgender</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Row 4: Category + EPIC Number -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>SC/ST/OBC/General <span class="required">*</span></label>
+                            <select name="SC_ST_OBC_GENERAL" required>
+                                <option value="">Select Category</option>
+                                <option value="SC">SC</option>
+                                <option value="ST">ST</option>
+                                <option value="OBC">OBC</option>
+                                <option value="GENERAL">General</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>EPIC Number (Full) <span class="required">*</span></label>
+                            <input type="text" name="EPIC_NUMBER" id="epicNumber" placeholder="Enter Voter ID card number" required>
+                            <div class="hint-text">Enter EPIC number to auto-fill Name & Guardian from SIR sheet</div>
+                        </div>
+                    </div>
+
+                    <!-- Row 4B: NAME AS PER ECI + GURDIAN AS PER ECI (Auto-filled) -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>NAME AS PER ECI <span class="required">*</span></label>
+                            <input type="text" name="NAME_AS_PER_ECI" id="nameAsPerECI" placeholder="Auto-fills from EPIC" readonly>
+                            <div class="hint-text">Auto-filled from SIR sheet</div>
+                        </div>
+                        <div class="form-group">
+                            <label>GURDIAN AS PER ECI <span class="required">*</span></label>
+                            <input type="text" name="GURDIAN_AS_PER_ECI" id="guardianAsPerECI" placeholder="Auto-fills from EPIC" readonly>
+                            <div class="hint-text">Auto-filled from SIR sheet</div>
+                        </div>
+                    </div>
+
+                    <!-- Row 5: Aadhaar Number + Mobile Number -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Aadhaar Number <span class="required">*</span></label>
+                            <input type="text" name="AADHAAR_NUMBER" placeholder="12-digit Aadhaar" pattern="\d{12}" maxlength="12" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Mobile Number (Linked with Aadhaar) <span class="required">*</span></label>
+                            <input type="tel" name="MOBILE_NUMBER" placeholder="10-digit mobile" pattern="\d{10}" maxlength="10" required>
+                        </div>
+                    </div>
+
+                    <!-- Row 6: Bank Name + Branch -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Name of Bank <span class="required">*</span></label>
+                            <select name="NAME_OF_BANK" id="bankNameSelect" required onchange="updateBranches()">
+                                <option value="">Select Bank</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Branch <span class="required">*</span></label>
+                            <select name="BRANCH" id="branchSelect" required onchange="updateIFSC()">
+                                <option value="">Select Branch</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Row 7: IFSC Code + Full Account Number -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>IFSC Code <span class="required">*</span></label>
+                            <input type="text" name="IFSC" id="ifscInput" placeholder="Auto-filled" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Full Account Number <span class="required">*</span></label>
+                            <input type="text" name="FULL_ACCOUNT_NUMBER" placeholder="Enter full account number" required>
+                        </div>
+                    </div>
+
+                    <!-- Row 8: WBSEDCL Consumer ID -->
+                    <div class="form-group">
+                        <label>WBSEDCL Consumer ID</label>
+                        <input type="text" name="WBSEDCL_CONSUMER_ID" placeholder="Consumer ID (if available)">
+                    </div>
+
+                    <!-- Row 9: Applicant Photograph WITH CROPPER -->
+                    <div class="form-group">
+                        <label>Applicant Photograph <span class="required">*</span></label>
+                        
+                        <div class="photo-attach-area" id="photoArea">
+                            <div id="photoPlaceholder">
+                                <div class="photo-icon">📷</div>
+                                <div class="photo-text">Tap to attach photo</div>
+                                <div class="photo-sub-text">Take photo with camera or choose from gallery</div>
+                            </div>
+                            <div id="photoPreview" class="hidden">
+                                <img id="capturedPhoto" class="photo-preview-img" src="" alt="Photo">
+                            </div>
+                            <button type="button" class="remove-photo-btn" onclick="removePhoto()">✕</button>
+                            <div class="photo-actions">
+                                <button type="button" class="btn-camera" onclick="openCamera()">📸 Camera</button>
+                                <button type="button" class="btn-gallery" onclick="openGallery()">📁 Gallery</button>
+                            </div>
+                            <input type="file" id="photoInput" accept="image/*" capture="environment" onchange="handlePhotoAttach(event)">
+                            <input type="file" id="galleryInput" accept="image/*" onchange="handlePhotoAttach(event)">
+                        </div>
+                        
+                        <input type="hidden" name="APPLICANT_PHOTOGRAPH_LINK" id="photoLink">
+                        
+                        <div class="photo-status" id="photoStatus"></div>
+                        
+                        <div class="hint-text" style="margin-top: 6px;">
+                            📸 Tap "Camera" or "Gallery" to select photo, then <strong>crop</strong> to passport size.
+                        </div>
+                    </div>
+
+                    <button type="submit" class="submit-btn secondary" id="dataSubmitBtn">
+                        <span id="dataSubmitBtnText">Submit Entry</span>
+                    </button>
+                    
+                    <button type="button" class="btn-cancel" onclick="hideDataEntry()">
+                        Cancel
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Message Display -->
+        <div id="message" class="message"></div>
+    </div>
+
+    <!-- Change Password Modal -->
+    <div class="modal-overlay" id="passwordModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>🔑 Change Password</h3>
+                <button class="modal-close" onclick="closePasswordModal()">✕</button>
+            </div>
+            <form onsubmit="return handleChangePassword(event)" id="changePasswordForm">
+                <div class="form-group">
+                    <label>Current Password <span class="required">*</span></label>
+                    <div class="password-toggle">
+                        <input type="password" id="currentPassword" placeholder="Enter current password" required>
+                        <button type="button" class="toggle-btn" onclick="togglePassword('currentPassword')">👁️</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>New Password <span class="required">*</span></label>
+                    <div class="password-toggle">
+                        <input type="password" id="newPassword" placeholder="Min 6 characters" minlength="6" required>
+                        <button type="button" class="toggle-btn" onclick="togglePassword('newPassword')">👁️</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Confirm New Password <span class="required">*</span></label>
+                    <div class="password-toggle">
+                        <input type="password" id="confirmPassword" placeholder="Confirm new password" required>
+                        <button type="button" class="toggle-btn" onclick="togglePassword('confirmPassword')">👁️</button>
+                    </div>
+                </div>
+                <button type="submit" class="submit-btn" id="changePwdBtn">
+                    <span id="changePwdBtnText">Update Password</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- CROPPER MODAL -->
+    <div class="cropper-overlay" id="cropperOverlay">
+        <div class="cropper-container">
+            <div class="cropper-header">
+                <h3>✂️ Crop Photo</h3>
+                <button class="close-cropper" onclick="closeCropper()">✕</button>
+            </div>
+            <div class="cropper-wrapper" id="cropperWrapper">
+                <img id="cropperImage" src="" alt="Crop">
+                <div class="crop-box" id="cropBox">
+                    <div class="crop-handle nw"></div>
+                    <div class="crop-handle n"></div>
+                    <div class="crop-handle ne"></div>
+                    <div class="crop-handle w"></div>
+                    <div class="crop-handle e"></div>
+                    <div class="crop-handle sw"></div>
+                    <div class="crop-handle s"></div>
+                    <div class="crop-handle se"></div>
+                </div>
+            </div>
+            <div class="crop-info">📐 Drag to adjust crop area (Passport size: 2x2 ratio)</div>
+            <div class="cropper-actions">
+                <button class="btn-crop-cancel" onclick="closeCropper()">Cancel</button>
+                <button class="btn-crop-apply" id="applyCropBtn">✅ Apply Crop</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // CONFIGURATION - UPDATE THIS URL
+        // ============================================
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxJRWQTlMWBZnijPRvH7PssZnfwQFb5QHl6QENkZfFIoouSHc9W6k3_OYikimSX8AVV/exec';
+        const APP = {
+            currentUser: null,
+            sessionToken: null,
+            currentTab: 'signin'
+        };
+
+        // ============================================
+        // BANK DATA
+        // ============================================
+        let bankData = [];
+        let branchMap = {};
+
+        // ============================================
+        // PHOTO VARIABLES
+        // ============================================
+        let attachedPhotoFile = null;
+        let attachedPhotoDataURL = null;
+        let isPhotoAttached = false;
+        let originalImageFile = null;
+        let originalImageDataURL = null;
+
+        // ============================================
+        // CROPPER VARIABLES
+        // ============================================
+        let cropperActive = false;
+        let cropStartX = 0, cropStartY = 0;
+        let cropEndX = 0, cropEndY = 0;
+        let isDragging = false;
+        let isResizing = false;
+        let resizeHandle = '';
+        let cropImageElement = null;
+        let cropWrapperElement = null;
+        let cropBoxElement = null;
+        let cropImageData = null;
+
+        // ============================================
+        // LOOKUP TIMER
+        // ============================================
+        let lookupTimer = null;
+
+        // ============================================
+        // INITIALIZATION
+        // ============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedToken = localStorage.getItem('sessionToken');
+            const savedUser = localStorage.getItem('currentUser');
+            
+            if (savedToken && savedUser) {
+                APP.sessionToken = savedToken;
+                APP.currentUser = JSON.parse(savedUser);
+                showDashboard();
+                loadBankData();
+            }
+            
+            document.getElementById('signupContact').addEventListener('input', function(e) {
+                this.value = this.value.replace(/\D/g, '').slice(0, 10);
+            });
+            
+            document.getElementById('signinMobile').addEventListener('input', function(e) {
+                this.value = this.value.replace(/\D/g, '').slice(0, 10);
+            });
+
+            setupEpicLookup();
+            initCropper();
+        });
+
+        // ============================================
+        // EPIC LOOKUP
+        // ============================================
+        function setupEpicLookup() {
+            const epicInput = document.getElementById('epicNumber');
+            const nameField = document.getElementById('nameAsPerECI');
+            const guardianField = document.getElementById('guardianAsPerECI');
+
+            if (!epicInput || !nameField || !guardianField) return;
+
+            epicInput.addEventListener('input', function() {
+                const epicValue = this.value.trim();
+
+                if (epicValue === '') {
+                    nameField.value = '';
+                    guardianField.value = '';
+                    nameField.className = '';
+                    guardianField.className = '';
+                    nameField.placeholder = 'Auto-fills from EPIC';
+                    guardianField.placeholder = 'Auto-fills from EPIC';
+                    return;
+                }
+
+                nameField.className = 'lookup-loading';
+                guardianField.className = 'lookup-loading';
+                nameField.placeholder = 'Searching...';
+                guardianField.placeholder = 'Searching...';
+
+                clearTimeout(lookupTimer);
+                lookupTimer = setTimeout(async function() {
+                    try {
+                        const formData = new URLSearchParams({
+                            action: 'get_voter_details',
+                            epicNumber: epicValue
+                        });
+
+                        const response = await fetch(SCRIPT_URL, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: formData
+                        });
+
+                        const result = await response.json();
+
+                        if (result.success && result.data) {
+                            nameField.value = result.data.voterName || '';
+                            guardianField.value = result.data.guardian || '';
+                            nameField.className = 'lookup-success';
+                            guardianField.className = 'lookup-success';
+                            nameField.placeholder = '✓ Found from EPIC';
+                            guardianField.placeholder = '✓ Found from EPIC';
+                            
+                            showMessage('✅ Voter found! Name and Guardian auto-filled.', 'success');
+                            setTimeout(() => hideMessage(), 2500);
+                        } else {
+                            nameField.value = '';
+                            guardianField.value = '';
+                            nameField.className = 'lookup-error';
+                            guardianField.className = 'lookup-error';
+                            nameField.placeholder = '❌ No match found';
+                            guardianField.placeholder = '❌ No match found';
+                            
+                            showMessage('⚠️ No voter found with EPIC: ' + epicValue, 'warning');
+                            setTimeout(() => hideMessage(), 2500);
+                        }
+                    } catch (error) {
+                        console.error('Lookup error:', error);
+                        nameField.className = 'lookup-error';
+                        guardianField.className = 'lookup-error';
+                        nameField.placeholder = '❌ Error searching';
+                        guardianField.placeholder = '❌ Error searching';
+                    }
+                }, 500);
+            });
+        }
+
+        // ============================================
+        // LOAD BANK DATA
+        // ============================================
+        async function loadBankData() {
+            try {
+                const formData = new URLSearchParams({
+                    action: 'get_banks'
+                });
+
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (result.success && result.data) {
+                    bankData = result.data;
+                    
+                    const bankSelect = document.getElementById('bankNameSelect');
+                    const branchSelect = document.getElementById('branchSelect');
+                    
+                    while (bankSelect.options.length > 1) {
+                        bankSelect.remove(1);
+                    }
+                    
+                    const uniqueBanks = [...new Set(bankData.map(b => b.bankName))];
+                    
+                    uniqueBanks.forEach(bank => {
+                        const option = document.createElement('option');
+                        option.value = bank;
+                        option.textContent = bank;
+                        bankSelect.appendChild(option);
+                    });
+                }
+            } catch (error) {
+                console.error('Failed to load bank data:', error);
+            }
+        }
+
+        function updateBranches() {
+            const bankName = document.getElementById('bankNameSelect').value;
+            const branchSelect = document.getElementById('branchSelect');
+            const ifscInput = document.getElementById('ifscInput');
+            
+            while (branchSelect.options.length > 1) {
+                branchSelect.remove(1);
+            }
+            
+            ifscInput.value = '';
+            
+            if (!bankName) return;
+            
+            const branches = bankData.filter(b => b.bankName === bankName);
+            const uniqueBranches = [...new Set(branches.map(b => b.branch))];
+            
+            uniqueBranches.forEach(branch => {
+                const option = document.createElement('option');
+                option.value = branch;
+                option.textContent = branch;
+                branchSelect.appendChild(option);
+            });
+            
+            branchMap = {};
+            branches.forEach(b => {
+                branchMap[b.branch] = b.ifsc;
+            });
+        }
+
+        function updateIFSC() {
+            const branch = document.getElementById('branchSelect').value;
+            const ifscInput = document.getElementById('ifscInput');
+            
+            if (branch && branchMap[branch]) {
+                ifscInput.value = branchMap[branch];
+                ifscInput.classList.add('auto-generated');
+            } else {
+                ifscInput.value = '';
+                ifscInput.classList.remove('auto-generated');
+            }
+        }
+
+        // ============================================
+        // GENERATE UNIQUE APPLICATION NUMBER
+        // ============================================
+        async function generateApplicationNumber() {
+            try {
+                const formData = new URLSearchParams({
+                    action: 'get_next_number'
+                });
+
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    document.getElementById('uniqueApplicationNumber').value = result.data.nextNumber;
+                    return result.data.nextNumber;
+                }
+            } catch (error) {
+                console.error('Failed to generate application number:', error);
+            }
+            return 'JKS/BGP/1';
+        }
+
+        // ============================================
+        // CROPPER - INITIALIZE
+        // ============================================
+        function initCropper() {
+            cropWrapperElement = document.getElementById('cropperWrapper');
+            cropBoxElement = document.getElementById('cropBox');
+            cropImageElement = document.getElementById('cropperImage');
+
+            // Mouse events for crop box
+            cropBoxElement.addEventListener('mousedown', onCropMouseDown);
+            cropBoxElement.addEventListener('touchstart', onCropTouchStart, { passive: false });
+
+            // Prevent default touch actions on wrapper
+            cropWrapperElement.addEventListener('touchmove', function(e) {
+                if (cropperActive) e.preventDefault();
+            }, { passive: false });
+        }
+
+        // ============================================
+        // CROPPER - OPEN
+        // ============================================
+        function openCropper(imageDataURL) {
+            cropperActive = true;
+            cropImageData = imageDataURL;
+            cropImageElement.src = imageDataURL;
+
+            // Wait for image to load
+            cropImageElement.onload = function() {
+                const wrapperRect = cropWrapperElement.getBoundingClientRect();
+                const imgRect = cropImageElement.getBoundingClientRect();
+                
+                // Calculate crop box size (70% of image, centered)
+                const cropSize = Math.min(imgRect.width, imgRect.height) * 0.6;
+                const cropX = (imgRect.width - cropSize) / 2;
+                const cropY = (imgRect.height - cropSize) / 2;
+                
+                // Set crop box position using percentage
+                const widthPercent = (cropSize / imgRect.width) * 100;
+                const heightPercent = (cropSize / imgRect.height) * 100;
+                const leftPercent = (cropX / imgRect.width) * 100;
+                const topPercent = (cropY / imgRect.height) * 100;
+                
+                cropBoxElement.style.left = leftPercent + '%';
+                cropBoxElement.style.top = topPercent + '%';
+                cropBoxElement.style.width = widthPercent + '%';
+                cropBoxElement.style.height = heightPercent + '%';
+                
+                cropBoxElement.dataset.imgWidth = imgRect.width;
+                cropBoxElement.dataset.imgHeight = imgRect.height;
+            };
+
+            document.getElementById('cropperOverlay').classList.add('show');
+        }
+
+        // ============================================
+        // CROPPER - CLOSE
+        // ============================================
+        function closeCropper() {
+            cropperActive = false;
+            document.getElementById('cropperOverlay').classList.remove('show');
+        }
+
+        // ============================================
+        // CROPPER - MOUSE EVENTS
+        // ============================================
+        function onCropMouseDown(e) {
+            if (!cropperActive) return;
+            e.preventDefault();
+            
+            const target = e.target;
+            if (target.classList.contains('crop-handle')) {
+                isResizing = true;
+                resizeHandle = target.className.split(' ')[1]; // nw, ne, sw, se, n, s, w, e
+            } else {
+                isDragging = true;
+            }
+            
+            const rect = cropWrapperElement.getBoundingClientRect();
+            cropStartX = e.clientX - rect.left;
+            cropStartY = e.clientY - rect.top;
+            
+            document.addEventListener('mousemove', onCropMouseMove);
+            document.addEventListener('mouseup', onCropMouseUp);
+        }
+
+        function onCropMouseMove(e) {
+            if (!cropperActive) return;
+            e.preventDefault();
+            
+            const rect = cropWrapperElement.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left;
+            const mouseY = e.clientY - rect.top;
+            
+            if (isDragging) {
+                moveCropBox(mouseX - cropStartX, mouseY - cropStartY);
+                cropStartX = mouseX;
+                cropStartY = mouseY;
+            } else if (isResizing) {
+                resizeCropBox(mouseX, mouseY, resizeHandle);
+            }
+        }
+
+        function onCropMouseUp() {
+            isDragging = false;
+            isResizing = false;
+            document.removeEventListener('mousemove', onCropMouseMove);
+            document.removeEventListener('mouseup', onCropMouseUp);
+        }
+
+        // ============================================
+        // CROPPER - TOUCH EVENTS
+        // ============================================
+        function onCropTouchStart(e) {
+            if (!cropperActive) return;
+            e.preventDefault();
+            
+            const touch = e.touches[0];
+            const target = e.target;
+            
+            if (target.classList.contains('crop-handle')) {
+                isResizing = true;
+                resizeHandle = target.className.split(' ')[1];
+            } else {
+                isDragging = true;
+            }
+            
+            const rect = cropWrapperElement.getBoundingClientRect();
+            cropStartX = touch.clientX - rect.left;
+            cropStartY = touch.clientY - rect.top;
+            
+            document.addEventListener('touchmove', onCropTouchMove, { passive: false });
+            document.addEventListener('touchend', onCropTouchEnd, { passive: false });
+        }
+
+        function onCropTouchMove(e) {
+            if (!cropperActive) return;
+            e.preventDefault();
+            
+            const touch = e.touches[0];
+            const rect = cropWrapperElement.getBoundingClientRect();
+            const touchX = touch.clientX - rect.left;
+            const touchY = touch.clientY - rect.top;
+            
+            if (isDragging) {
+                moveCropBox(touchX - cropStartX, touchY - cropStartY);
+                cropStartX = touchX;
+                cropStartY = touchY;
+            } else if (isResizing) {
+                resizeCropBox(touchX, touchY, resizeHandle);
+            }
+        }
+
+        function onCropTouchEnd() {
+            isDragging = false;
+            isResizing = false;
+            document.removeEventListener('touchmove', onCropTouchMove);
+            document.removeEventListener('touchend', onCropTouchEnd);
+        }
+
+        // ============================================
+        // CROPPER - MOVE CROP BOX
+        // ============================================
+        function moveCropBox(deltaX, deltaY) {
+            const rect = cropWrapperElement.getBoundingClientRect();
+            const imgRect = cropImageElement.getBoundingClientRect();
+            
+            let left = parseFloat(cropBoxElement.style.left) || 0;
+            let top = parseFloat(cropBoxElement.style.top) || 0;
+            let width = parseFloat(cropBoxElement.style.width) || 30;
+            let height = parseFloat(cropBoxElement.style.height) || 30;
+            
+            // Convert pixel delta to percentage
+            const deltaXPercent = (deltaX / imgRect.width) * 100;
+            const deltaYPercent = (deltaY / imgRect.height) * 100;
+            
+            let newLeft = left + deltaXPercent;
+            let newTop = top + deltaYPercent;
+            
+            // Constrain to wrapper bounds
+            newLeft = Math.max(0, Math.min(newLeft, 100 - width));
+            newTop = Math.max(0, Math.min(newTop, 100 - height));
+            
+            cropBoxElement.style.left = newLeft + '%';
+            cropBoxElement.style.top = newTop + '%';
+        }
+
+        // ============================================
+        // CROPPER - RESIZE CROP BOX
+        // ============================================
+        function resizeCropBox(mouseX, mouseY, handle) {
+            const rect = cropWrapperElement.getBoundingClientRect();
+            const imgRect = cropImageElement.getBoundingClientRect();
+            
+            let left = parseFloat(cropBoxElement.style.left) || 0;
+            let top = parseFloat(cropBoxElement.style.top) || 0;
+            let width = parseFloat(cropBoxElement.style.width) || 30;
+            let height = parseFloat(cropBoxElement.style.height) || 30;
+            
+            // Convert mouse position to percentage
+            const mouseXPercent = (mouseX / imgRect.width) * 100;
+            const mouseYPercent = (mouseY / imgRect.height) * 100;
+            
+            const minSize = 5; // Minimum 5% of image
+            
+            if (handle.includes('e')) {
+                let newWidth = mouseXPercent - left;
+                newWidth = Math.max(minSize, Math.min(newWidth, 100 - left));
+                width = newWidth;
+            }
+            if (handle.includes('w')) {
+                let newLeft = mouseXPercent;
+                let newWidth = left + width - newLeft;
+                if (newWidth >= minSize && newLeft >= 0) {
+                    left = newLeft;
+                    width = newWidth;
+                }
+            }
+            if (handle.includes('s')) {
+                let newHeight = mouseYPercent - top;
+                newHeight = Math.max(minSize, Math.min(newHeight, 100 - top));
+                height = newHeight;
+            }
+            if (handle.includes('n')) {
+                let newTop = mouseYPercent;
+                let newHeight = top + height - newTop;
+                if (newHeight >= minSize && newTop >= 0) {
+                    top = newTop;
+                    height = newHeight;
+                }
+            }
+            
+            cropBoxElement.style.left = left + '%';
+            cropBoxElement.style.top = top + '%';
+            cropBoxElement.style.width = width + '%';
+            cropBoxElement.style.height = height + '%';
+        }
+
+        // ============================================
+        // CROPPER - APPLY CROP
+        // ============================================
+        function applyCrop() {
+            if (!cropImageData) return;
+            
+            const img = new Image();
+            img.onload = function() {
+                // Get crop box dimensions in pixels
+                const left = parseFloat(cropBoxElement.style.left) || 0;
+                const top = parseFloat(cropBoxElement.style.top) || 0;
+                const width = parseFloat(cropBoxElement.style.width) || 30;
+                const height = parseFloat(cropBoxElement.style.height) || 30;
+                
+                const imgWidth = img.width;
+                const imgHeight = img.height;
+                
+                const cropX = (left / 100) * imgWidth;
+                const cropY = (top / 100) * imgHeight;
+                const cropWidth = (width / 100) * imgWidth;
+                const cropHeight = (height / 100) * imgHeight;
+                
+                // Create canvas and draw cropped image
+                const canvas = document.createElement('canvas');
+                canvas.width = cropWidth;
+                canvas.height = cropHeight;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, cropX, cropY, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
+                
+                // Get cropped data URL
+                const croppedDataURL = canvas.toDataURL('image/jpeg', 0.85);
+                
+                // Convert to File
+                const base64Data = croppedDataURL.split(',')[1];
+                const byteCharacters = atob(base64Data);
+                const byteNumbers = new Array(byteCharacters.length);
+                for (let i = 0; i < byteCharacters.length; i++) {
+                    byteNumbers[i] = byteCharacters.charCodeAt(i);
+                }
+                const byteArray = new Uint8Array(byteNumbers);
+                const croppedBlob = new Blob([byteArray], { type: 'image/jpeg' });
+                
+                const croppedFile = new File(
+                    [croppedBlob],
+                    'cropped_' + (originalImageFile ? originalImageFile.name : 'photo.jpg'),
+                    { type: 'image/jpeg', lastModified: Date.now() }
+                );
+                
+                // Set as attached photo
+                attachedPhotoFile = croppedFile;
+                attachedPhotoDataURL = croppedDataURL;
+                isPhotoAttached = true;
+                
+                // Update preview
+                document.getElementById('photoPlaceholder').classList.add('hidden');
+                document.getElementById('photoPreview').classList.remove('hidden');
+                document.getElementById('capturedPhoto').src = croppedDataURL;
+                document.getElementById('photoArea').classList.add('has-photo');
+                
+                const status = document.getElementById('photoStatus');
+                status.classList.add('active');
+                status.textContent = '✅ Photo cropped & attached! (Passport size: ' + Math.round(cropWidth) + 'x' + Math.round(cropHeight) + 'px)';
+                status.className = 'photo-status active attached';
+                
+                // Close cropper
+                closeCropper();
+                
+                showMessage('✅ Image cropped to passport size!', 'success');
+                setTimeout(() => hideMessage(), 2500);
+            };
+            img.src = cropImageData;
+        }
+
+        // ============================================
+        // CROPPER - APPLY BUTTON
+        // ============================================
+        document.getElementById('applyCropBtn').addEventListener('click', applyCrop);
+
+        // ============================================
+        // PHOTO FUNCTIONS WITH CROPPER
+        // ============================================
+        function openCamera() {
+            document.getElementById('photoInput').click();
+        }
+
+        function openGallery() {
+            document.getElementById('galleryInput').click();
+        }
+
+        async function handlePhotoAttach(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            if (!file.type.startsWith('image/')) {
+                showMessage('❌ Please select an image file.', 'error');
+                return;
+            }
+            
+            try {
+                // Store original
+                originalImageFile = file;
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    originalImageDataURL = e.target.result;
+                    // Open cropper
+                    openCropper(originalImageDataURL);
+                };
+                reader.readAsDataURL(file);
+                
+            } catch (error) {
+                console.error('Error:', error);
+                showMessage('❌ Failed to load image: ' + error.message, 'error');
+            }
+            
+            event.target.value = '';
+        }
+
+        function removePhoto() {
+            attachedPhotoFile = null;
+            attachedPhotoDataURL = null;
+            isPhotoAttached = false;
+            originalImageFile = null;
+            originalImageDataURL = null;
+            document.getElementById('photoLink').value = '';
+            document.getElementById('photoPlaceholder').classList.remove('hidden');
+            document.getElementById('photoPreview').classList.add('hidden');
+            document.getElementById('capturedPhoto').src = '';
+            document.getElementById('photoArea').classList.remove('has-photo');
+            
+            const status = document.getElementById('photoStatus');
+            status.classList.remove('active');
+            status.textContent = '';
+        }
+
+        // ============================================
+        // TAB SWITCHING
+        // ============================================
+        function switchTab(tab) {
+            APP.currentTab = tab;
+            document.getElementById('signinTab').classList.toggle('active', tab === 'signin');
+            document.getElementById('signupTab').classList.toggle('active', tab === 'signup');
+            document.getElementById('signinForm').classList.toggle('hidden', tab !== 'signin');
+            document.getElementById('signupForm').classList.toggle('hidden', tab !== 'signup');
+            hideMessage();
+        }
+
+        // ============================================
+        // PASSWORD TOGGLE
+        // ============================================
+        function togglePassword(inputId) {
+            const input = document.getElementById(inputId);
+            const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+            input.setAttribute('type', type);
+        }
+
+        // ============================================
+        // MESSAGE HANDLING
+        // ============================================
+        function showMessage(text, type = 'info') {
+            const msg = document.getElementById('message');
+            msg.textContent = text;
+            msg.className = `message ${type}`;
+            msg.style.display = 'block';
+            
+            clearTimeout(msg._timeout);
+            msg._timeout = setTimeout(() => {
+                msg.style.display = 'none';
+            }, 5000);
+        }
+
+        function hideMessage() {
+            document.getElementById('message').style.display = 'none';
+        }
+
+        // ============================================
+        // LOADING STATE
+        // ============================================
+        function showLoading(btnId, textId, loadingText) {
+            document.getElementById(btnId).disabled = true;
+            document.getElementById(textId).innerHTML = `<span class="loading"></span> ${loadingText}`;
+        }
+
+        function hideLoading(btnId, textId, originalText) {
+            document.getElementById(btnId).disabled = false;
+            document.getElementById(textId).textContent = originalText;
+        }
+
+        // ============================================
+        // SIGN UP
+        // ============================================
+        async function handleSignUp(event) {
+            event.preventDefault();
+            showLoading('signupBtn', 'signupBtnText', 'Creating Account...');
+            hideMessage();
+
+            const name = document.getElementById('signupName').value.trim();
+            const contact = document.getElementById('signupContact').value.trim();
+            const password = document.getElementById('signupPassword').value;
+
+            if (!name || !contact || !password) {
+                showMessage('❌ Please fill in all required fields.', 'error');
+                hideLoading('signupBtn', 'signupBtnText', 'Create Account');
+                return;
+            }
+
+            if (contact.length !== 10) {
+                showMessage('❌ Please enter a valid 10-digit contact number.', 'error');
+                hideLoading('signupBtn', 'signupBtnText', 'Create Account');
+                return;
+            }
+
+            if (password.length < 6) {
+                showMessage('❌ Password must be at least 6 characters long.', 'error');
+                hideLoading('signupBtn', 'signupBtnText', 'Create Account');
+                return;
+            }
+
+            try {
+                const formData = new URLSearchParams({
+                    action: 'signup',
+                    name: name,
+                    contact: contact,
+                    password: password
+                });
+
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showMessage(
+                        '✅ Account created successfully!\n\n' +
+                        '📋 Your account is now pending admin approval.\n' +
+                        '⏳ You will be notified once approved.\n\n' +
+                        '📞 For queries, contact your administrator.',
+                        'success'
+                    );
+                    const form = document.getElementById('signupFormElement');
+                    if (form) {
+                        form.reset();
+                    }
+                } else {
+                    showMessage('❌ ' + result.message, 'error');
+                }
+
+            } catch (error) {
+                showMessage('❌ Registration failed: ' + error.message, 'error');
+            }
+
+            hideLoading('signupBtn', 'signupBtnText', 'Create Account');
+        }
+
+        // ============================================
+        // SIGN IN
+        // ============================================
+        async function handleSignIn(event) {
+            event.preventDefault();
+            showLoading('signinBtn', 'signinBtnText', 'Signing In...');
+            hideMessage();
+
+            const mobile = document.getElementById('signinMobile').value.trim();
+            const password = document.getElementById('signinPassword').value;
+
+            if (!mobile || !password) {
+                showMessage('❌ Please enter mobile number and password.', 'error');
+                hideLoading('signinBtn', 'signinBtnText', 'Sign In');
+                return;
+            }
+
+            if (mobile.length !== 10) {
+                showMessage('❌ Please enter a valid 10-digit mobile number.', 'error');
+                hideLoading('signinBtn', 'signinBtnText', 'Sign In');
+                return;
+            }
+
+            try {
+                const formData = new URLSearchParams({
+                    action: 'signin',
+                    contact: mobile,
+                    password: password
+                });
+
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (!result.success) {
+                    if (result.status === 'pending') {
+                        showMessage(
+                            '⏳ Your account is pending approval.\n\n' +
+                            'Please wait for admin to approve your account.\n' +
+                            'Contact administrator for more information.',
+                            'warning'
+                        );
+                    } else if (result.status === 'rejected') {
+                        showMessage(
+                            '❌ Your account has been rejected.\n\n' +
+                            'Please contact administrator for more information.',
+                            'error'
+                        );
+                    } else {
+                        showMessage('❌ ' + result.message, 'error');
+                    }
+                    hideLoading('signinBtn', 'signinBtnText', 'Sign In');
+                    return;
+                }
+
+                const userData = result.data;
+                APP.currentUser = {
+                    name: userData.name,
+                    contact: userData.contact,
+                    status: userData.status,
+                    slNo: userData.slNo
+                };
+                APP.sessionToken = userData.sessionToken;
+
+                localStorage.setItem('sessionToken', APP.sessionToken);
+                localStorage.setItem('currentUser', JSON.stringify(APP.currentUser));
+
+                showDashboard();
+                loadBankData();
+                showMessage('✅ Welcome back, ' + userData.name + '!', 'success');
+
+            } catch (error) {
+                showMessage('❌ Login failed: ' + error.message, 'error');
+            }
+
+            hideLoading('signinBtn', 'signinBtnText', 'Sign In');
+        }
+
+        // ============================================
+        // DASHBOARD - COMPACT VERSION
+        // ============================================
+        function showDashboard() {
+            document.getElementById('authSection').classList.add('hidden');
+            document.getElementById('dashboardSection').classList.remove('hidden');
+            
+            if (APP.currentUser) {
+                const initial = APP.currentUser.name.charAt(0).toUpperCase();
+                document.getElementById('userAvatarCompact').textContent = initial;
+                document.getElementById('userNameCompact').textContent = APP.currentUser.name;
+                document.getElementById('userContactCompact').textContent = '📱 ' + APP.currentUser.contact;
+                document.getElementById('welcomeNameCompact').textContent = APP.currentUser.name;
+                
+                const statusBadge = document.getElementById('userStatusBadgeCompact');
+                const status = APP.currentUser.status || 'Pending';
+                statusBadge.textContent = status;
+                statusBadge.className = 'user-status-compact ' + status.toLowerCase();
+            }
+        }
+
+        // ============================================
+        // SIGN OUT
+        // ============================================
+        function handleSignOut() {
+            localStorage.removeItem('sessionToken');
+            localStorage.removeItem('currentUser');
+            APP.currentUser = null;
+            APP.sessionToken = null;
+            
+            document.getElementById('dashboardSection').classList.add('hidden');
+            document.getElementById('authSection').classList.remove('hidden');
+            
+            const signinForm = document.getElementById('signinFormElement');
+            if (signinForm) signinForm.reset();
+            const signupForm = document.getElementById('signupFormElement');
+            if (signupForm) signupForm.reset();
+            
+            showMessage('👋 Signed out successfully!', 'info');
+        }
+
+        // ============================================
+        // DATA ENTRY
+        // ============================================
+        function showDataEntry() {
+            const section = document.getElementById('dataEntrySection');
+            section.classList.toggle('hidden');
+            if (!section.classList.contains('hidden')) {
+                generateApplicationNumber();
+                removePhoto();
+                document.getElementById('ifscInput').classList.remove('auto-generated');
+                
+                const nameField = document.getElementById('nameAsPerECI');
+                const guardianField = document.getElementById('guardianAsPerECI');
+                if (nameField) {
+                    nameField.value = '';
+                    nameField.className = '';
+                    nameField.placeholder = 'Auto-fills from EPIC';
+                }
+                if (guardianField) {
+                    guardianField.value = '';
+                    guardianField.className = '';
+                    guardianField.placeholder = 'Auto-fills from EPIC';
+                }
+                const epicInput = document.getElementById('epicNumber');
+                if (epicInput) epicInput.value = '';
+            }
+        }
+
+        function hideDataEntry() {
+            document.getElementById('dataEntrySection').classList.add('hidden');
+            document.getElementById('dataEntryForm').reset();
+            document.getElementById('ifscInput').value = '';
+            document.getElementById('ifscInput').classList.remove('auto-generated');
+            removePhoto();
+            
+            const branchSelect = document.getElementById('branchSelect');
+            while (branchSelect.options.length > 1) {
+                branchSelect.remove(1);
+            }
+        }
+
+        // ============================================
+        // SUBMIT JOB CARD DATA WITH CROPPED IMAGE
+        // ============================================
+        async function submitJobCardData(event) {
+            event.preventDefault();
+            const btn = document.getElementById('dataSubmitBtn');
+            const btnText = document.getElementById('dataSubmitBtnText');
+            
+            showLoading('dataSubmitBtn', 'dataSubmitBtnText', 'Uploading & Submitting...');
+            hideMessage();
+
+            const form = event.target;
+            const formData = new FormData(form);
+            const data = {};
+            formData.forEach((value, key) => {
+                data[key] = value;
+            });
+
+            if (!isPhotoAttached || !attachedPhotoFile) {
+                showMessage('❌ Please attach and crop a photo before submitting.', 'error');
+                hideLoading('dataSubmitBtn', 'dataSubmitBtnText', 'Submit Entry');
+                return;
+            }
+
+            if (!data.UNIQUE_APPLICATION_NUMBER) {
+                showMessage('❌ Application number not generated. Please refresh.', 'error');
+                hideLoading('dataSubmitBtn', 'dataSubmitBtnText', 'Submit Entry');
+                return;
+            }
+
+            try {
+                // Convert cropped image to Base64
+                const reader = new FileReader();
+                const base64Promise = new Promise((resolve, reject) => {
+                    reader.onload = function(e) {
+                        const base64 = e.target.result.split(',')[1];
+                        resolve(base64);
+                    };
+                    reader.onerror = function(e) {
+                        reject(e.target.error);
+                    };
+                });
+                reader.readAsDataURL(attachedPhotoFile);
+                const base64Image = await base64Promise;
+                
+                // Upload photo
+                const appNumber = data.UNIQUE_APPLICATION_NUMBER;
+                const fileName = appNumber + '.jpg';
+                
+                const uploadParams = new URLSearchParams();
+                uploadParams.append('action', 'upload_photo');
+                uploadParams.append('fileName', fileName);
+                uploadParams.append('fileData', base64Image);
+                uploadParams.append('fileType', attachedPhotoFile.type || 'image/jpeg');
+                uploadParams.append('workCode', appNumber);
+                uploadParams.append('pointType', 'jobcard');
+                uploadParams.append('sessionToken', APP.sessionToken);
+                
+                const uploadResponse = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    body: uploadParams
+                });
+                
+                const uploadResult = await uploadResponse.json();
+                
+                if (!uploadResult.success) {
+                    showMessage('❌ Photo upload failed: ' + (uploadResult.error || uploadResult.message), 'error');
+                    hideLoading('dataSubmitBtn', 'dataSubmitBtnText', 'Submit Entry');
+                    return;
+                }
+                
+                data.APPLICANT_PHOTOGRAPH_LINK = uploadResult.hyperlinkFormula || uploadResult.fileUrl;
+                data.DATA_ENTRY_OPERATOR = APP.currentUser.name;
+                data.action = 'submit_data';
+                data.sessionToken = APP.sessionToken;
+                
+                // Submit form data
+                const params = new URLSearchParams(data);
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: params
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showMessage('✅ Data submitted successfully!\nApplication No: ' + data.UNIQUE_APPLICATION_NUMBER, 'success');
+                    form.reset();
+                    document.getElementById('ifscInput').value = '';
+                    document.getElementById('ifscInput').classList.remove('auto-generated');
+                    removePhoto();
+                    hideDataEntry();
+                    
+                    const branchSelect = document.getElementById('branchSelect');
+                    while (branchSelect.options.length > 1) {
+                        branchSelect.remove(1);
+                    }
+                } else {
+                    showMessage('❌ ' + result.message, 'error');
+                }
+
+            } catch (error) {
+                showMessage('❌ Submission failed: ' + error.message, 'error');
+            }
+
+            hideLoading('dataSubmitBtn', 'dataSubmitBtnText', 'Submit Entry');
+        }
+
+        // ============================================
+        // CHANGE PASSWORD
+        // ============================================
+        function showChangePassword() {
+            document.getElementById('passwordModal').classList.add('show');
+            document.getElementById('currentPassword').value = '';
+            document.getElementById('newPassword').value = '';
+            document.getElementById('confirmPassword').value = '';
+            hideMessage();
+        }
+
+        function closePasswordModal() {
+            document.getElementById('passwordModal').classList.remove('show');
+        }
+
+        async function handleChangePassword(event) {
+            event.preventDefault();
+            showLoading('changePwdBtn', 'changePwdBtnText', 'Updating...');
+            hideMessage();
+
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (newPassword !== confirmPassword) {
+                showMessage('❌ New passwords do not match.', 'error');
+                hideLoading('changePwdBtn', 'changePwdBtnText', 'Update Password');
+                return;
+            }
+
+            if (newPassword.length < 6) {
+                showMessage('❌ Password must be at least 6 characters.', 'error');
+                hideLoading('changePwdBtn', 'changePwdBtnText', 'Update Password');
+                return;
+            }
+
+            try {
+                const formData = new URLSearchParams({
+                    action: 'change_password',
+                    contact: APP.currentUser.contact,
+                    oldPassword: currentPassword,
+                    newPassword: newPassword
+                });
+
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showMessage('✅ Password changed successfully!', 'success');
+                    closePasswordModal();
+                } else {
+                    showMessage('❌ ' + result.message, 'error');
+                }
+
+            } catch (error) {
+                showMessage('❌ Password change failed: ' + error.message, 'error');
+            }
+
+            hideLoading('changePwdBtn', 'changePwdBtnText', 'Update Password');
+        }
+
+        // ============================================
+        // OTHER FUNCTIONS
+        // ============================================
+        function viewMyEntries() {
+            showMessage('📊 Your entries will appear here.', 'info');
+        }
+
+        function showHelp() {
+            showMessage(
+                '❓ Help & Support\n\n' +
+                '📌 New users: Sign up and wait for admin approval\n' +
+                '📌 Approved users: Can submit job card entries\n' +
+                '📌 Application number auto-generates\n' +
+                '📌 Enter EPIC number - it will auto-fill Name & Guardian from SIR sheet\n' +
+                '📌 Tap "Camera" or "Gallery" to select photo\n' +
+                '📌 Then CROP the photo to passport size by dragging the box\n' +
+                '📌 Drag corners to resize, drag center to reposition\n' +
+                '📌 Click "Apply Crop" when satisfied\n' +
+                '📌 Bank details are loaded from the BANKS sheet',
+                'info'
+            );
+        }
+
+        document.getElementById('passwordModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closePasswordModal();
+            }
+        });
+
+        // Close cropper with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && cropperActive) {
+                closeCropper();
+            }
+        });
+    </script>
+</body>
+</html>
