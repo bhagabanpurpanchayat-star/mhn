@@ -1014,13 +1014,16 @@
             <div id="dataEntrySection" class="data-entry-section hidden">
                 <h3>📋 New Job Card Entry</h3>
                 <form onsubmit="return submitJobCardData(event)" id="dataEntryForm">
-                    <!-- Hidden Unique Application Number -->
-                    <input type="hidden" name="UNIQUE_APPLICATION_NUMBER" id="uniqueApplicationNumber">
+                    <!-- Hidden field for application number - not visible to user -->
+                    <input type="hidden" id="uniqueApplicationNumber" name="UNIQUE_APPLICATION_NUMBER">
 
-                    <!-- Row 1: Name of Applicant -->
+                    <!-- Row 1: Name of Applicant - This generates the application number silently -->
                     <div class="form-group">
                         <label>Name of Applicant of Job Card <span class="required">*</span></label>
-                        <input type="text" name="NAME_OF_APPLICANT" placeholder="Full name as per job card" required>
+                        <input type="text" name="NAME_OF_APPLICANT" id="applicantNameInput" 
+                               placeholder="Enter applicant's full name" required
+                               oninput="generateApplicationNumberSilently(this.value)">
+                        <div class="hint-text">Application number will be auto-generated in the background</div>
                     </div>
 
                     <!-- Row 2: Family Members Details -->
@@ -1239,11 +1242,12 @@
         // ============================================
         // CONFIGURATION - UPDATE THIS URL
         // ============================================
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxuCzzEzfR5D7Z6Vs39ROwDF_It49ZaxCpVTxt_8eiz56pYhUK4RnJkVLtvWp72GhgX/exec';
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbysdNM-oJwpOWwQY3ww_g0ytKj_Ih1rFmEkssLWMdtnudNxPVgSBlwl5O4GHYINucWvEQ/exec';
         const APP = {
             currentUser: null,
             sessionToken: null,
-            currentTab: 'signin'
+            currentTab: 'signin',
+            generatedAppNumber: null // Store generated number silently
         };
 
         // ============================================
@@ -1279,6 +1283,7 @@
         // LOOKUP TIMER
         // ============================================
         let lookupTimer = null;
+        let appNumberTimeout = null;
 
         // ============================================
         // INITIALIZATION
@@ -1470,13 +1475,27 @@
         }
 
         // ============================================
-        // GENERATE UNIQUE APPLICATION NUMBER
+        // GENERATE UNIQUE APPLICATION NUMBER (SILENTLY)
         // ============================================
-        async function generateApplicationNumber() {
+        async function generateApplicationNumberSilently(applicantName) {
+            const hiddenField = document.getElementById('uniqueApplicationNumber');
+            
+            if (!applicantName || applicantName.trim() === '') {
+                hiddenField.value = '';
+                APP.generatedAppNumber = null;
+                return;
+            }
+            
             try {
                 const formData = new URLSearchParams({
-                    action: 'get_next_number'
+                    action: 'get_next_number',
+                    applicantName: applicantName.trim()
                 });
+
+                // Add session token if available
+                if (APP.sessionToken) {
+                    formData.append('sessionToken', APP.sessionToken);
+                }
 
                 const response = await fetch(SCRIPT_URL, {
                     method: 'POST',
@@ -1488,14 +1507,19 @@
 
                 const result = await response.json();
 
-                if (result.success) {
-                    document.getElementById('uniqueApplicationNumber').value = result.data.nextNumber;
-                    return result.data.nextNumber;
+                if (result.success && result.data) {
+                    const appNumber = result.data.nextNumber;
+                    hiddenField.value = appNumber;
+                    APP.generatedAppNumber = appNumber;
+                } else {
+                    hiddenField.value = '';
+                    APP.generatedAppNumber = null;
                 }
             } catch (error) {
-                console.error('Failed to generate application number:', error);
+                console.error('Error generating application number:', error);
+                hiddenField.value = '';
+                APP.generatedAppNumber = null;
             }
-            return 'JKS/BGP/1';
         }
 
         // ============================================
@@ -2126,7 +2150,10 @@
             const section = document.getElementById('dataEntrySection');
             section.classList.toggle('hidden');
             if (!section.classList.contains('hidden')) {
-                generateApplicationNumber();
+                // Clear previous values
+                document.getElementById('uniqueApplicationNumber').value = '';
+                APP.generatedAppNumber = null;
+                document.getElementById('applicantNameInput').value = '';
                 removePhoto();
                 document.getElementById('ifscInput').classList.remove('auto-generated');
                 
@@ -2150,6 +2177,8 @@
         function hideDataEntry() {
             document.getElementById('dataEntrySection').classList.add('hidden');
             document.getElementById('dataEntryForm').reset();
+            document.getElementById('uniqueApplicationNumber').value = '';
+            APP.generatedAppNumber = null;
             document.getElementById('ifscInput').value = '';
             document.getElementById('ifscInput').classList.remove('auto-generated');
             removePhoto();
@@ -2178,14 +2207,15 @@
                 data[key] = value;
             });
 
-            if (!isPhotoAttached || !attachedPhotoFile) {
-                showMessage('❌ Please attach and crop a photo before submitting.', 'error');
+            // Check if application number is generated (from hidden field)
+            if (!data.UNIQUE_APPLICATION_NUMBER || data.UNIQUE_APPLICATION_NUMBER.trim() === '') {
+                showMessage('❌ Please enter applicant name first. Application number is required.', 'error');
                 hideLoading('dataSubmitBtn', 'dataSubmitBtnText', 'Submit Entry');
                 return;
             }
 
-            if (!data.UNIQUE_APPLICATION_NUMBER) {
-                showMessage('❌ Application number not generated. Please refresh.', 'error');
+            if (!isPhotoAttached || !attachedPhotoFile) {
+                showMessage('❌ Please attach and crop a photo before submitting.', 'error');
                 hideLoading('dataSubmitBtn', 'dataSubmitBtnText', 'Submit Entry');
                 return;
             }
@@ -2249,8 +2279,10 @@
                 const result = await response.json();
 
                 if (result.success) {
-                    showMessage('✅ Data submitted successfully!\nApplication No: ' + data.UNIQUE_APPLICATION_NUMBER, 'success');
+                    showMessage('✅ Data submitted successfully!', 'success');
                     form.reset();
+                    document.getElementById('uniqueApplicationNumber').value = '';
+                    APP.generatedAppNumber = null;
                     document.getElementById('ifscInput').value = '';
                     document.getElementById('ifscInput').classList.remove('auto-generated');
                     removePhoto();
@@ -2351,7 +2383,8 @@
                 '❓ Help & Support\n\n' +
                 '📌 New users: Sign up and wait for admin approval\n' +
                 '📌 Approved users: Can submit job card entries\n' +
-                '📌 Application number auto-generates\n' +
+                '📌 Application number auto-generates in the background based on applicant name\n' +
+                '📌 Format: JKS/BGP/NAME (with suffix _2, _3 for duplicates)\n' +
                 '📌 Enter EPIC number - it will auto-fill Name & Guardian from SIR sheet\n' +
                 '📌 Tap "Camera" or "Gallery" to select photo\n' +
                 '📌 Then CROP the photo to passport size by dragging the box\n' +
