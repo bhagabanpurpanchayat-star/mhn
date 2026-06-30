@@ -13,133 +13,173 @@
         }
 
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1a0b2e 0%, #2d1b4e 30%, #4a1a6b 60%, #2d1b4e 100%);
             min-height: 100vh;
-            padding: 12px 12px 30px;
+            padding: 10px 10px 30px;
             display: flex;
             justify-content: center;
             align-items: flex-start;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 50%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 80%, rgba(118, 75, 162, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 50% 20%, rgba(237, 137, 54, 0.05) 0%, transparent 50%);
+            animation: floatBg 20s ease-in-out infinite alternate;
+            z-index: 0;
+        }
+
+        @keyframes floatBg {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(2%, 1%) rotate(3deg); }
         }
 
         .container {
-            background: white;
-            max-width: 500px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            max-width: 550px;
             width: 100%;
-            border-radius: 20px;
-            padding: 16px 14px 24px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
-            margin-top: 6px;
+            border-radius: 24px;
+            padding: 18px 16px 22px;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            position: relative;
+            z-index: 1;
         }
 
         .header {
             text-align: center;
-            margin-bottom: 20px;
-            padding-bottom: 14px;
-            border-bottom: 2px solid #f0f0f0;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.08);
         }
 
         .header h1 {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #f6e05e 0%, #f6ad55 30%, #fc8181 60%, #b794f4 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            font-size: 20px;
+            font-size: 24px;
             font-weight: 800;
             letter-spacing: -0.5px;
+            text-shadow: none;
+            filter: drop-shadow(0 2px 10px rgba(246, 224, 94, 0.2));
         }
 
         .header p {
-            color: #718096;
-            font-size: 12px;
+            color: #a0aec0;
+            font-size: 14px;
             margin-top: 4px;
+            font-weight: 500;
         }
 
-        /* ===== COMPACT DASHBOARD ===== */
         .dashboard-header-compact {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 10px;
-            padding: 8px 12px;
-            background: #f7fafc;
+            padding: 10px 14px;
+            background: rgba(255, 255, 255, 0.06);
             border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
         }
 
         .user-info-compact {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
 
         .user-avatar-compact {
-            width: 36px;
-            height: 36px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #f6e05e 0%, #f6ad55 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-weight: 700;
-            font-size: 15px;
+            color: #1a0b2e;
+            font-weight: 800;
+            font-size: 18px;
             text-transform: uppercase;
             flex-shrink: 0;
+            border: 2px solid rgba(246, 224, 94, 0.3);
+            box-shadow: 0 0 20px rgba(246, 224, 94, 0.1);
         }
 
         .user-details-compact {
-            line-height: 1.2;
+            line-height: 1.4;
         }
 
         .user-name-compact {
             font-weight: 700;
-            color: #2d3748;
-            font-size: 14px;
+            color: #ffffff;
+            font-size: 16px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
         }
 
         .user-contact-compact {
-            font-size: 10px;
-            color: #718096;
+            font-size: 12px;
+            color: #a0aec0;
         }
 
         .user-status-compact {
-            font-size: 9px;
-            padding: 1px 8px;
+            font-size: 10px;
+            padding: 3px 12px;
             border-radius: 10px;
             display: inline-block;
-            font-weight: 600;
-            margin-top: 1px;
+            font-weight: 700;
+            margin-top: 2px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .user-status-compact.approved {
-            background: #c6f6d5;
-            color: #22543d;
+            background: rgba(72, 187, 120, 0.25);
+            color: #68d391;
+            border: 1px solid rgba(72, 187, 120, 0.3);
+            box-shadow: 0 0 20px rgba(72, 187, 120, 0.05);
         }
 
         .user-status-compact.pending {
-            background: #fefcbf;
-            color: #744210;
+            background: rgba(237, 137, 54, 0.25);
+            color: #f6ad55;
+            border: 1px solid rgba(237, 137, 54, 0.3);
+            box-shadow: 0 0 20px rgba(237, 137, 54, 0.05);
         }
 
         .user-status-compact.rejected {
-            background: #fed7d7;
-            color: #742a2a;
+            background: rgba(229, 62, 62, 0.25);
+            color: #fc8181;
+            border: 1px solid rgba(229, 62, 62, 0.3);
+            box-shadow: 0 0 20px rgba(229, 62, 62, 0.05);
         }
 
         .logout-btn-compact {
-            padding: 5px 12px;
+            padding: 7px 16px;
             background: linear-gradient(135deg, #fc8181 0%, #e53e3e 100%);
             color: white;
             border: none;
-            border-radius: 8px;
-            font-size: 11px;
-            font-weight: 600;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
             flex-shrink: 0;
+            box-shadow: 0 4px 15px rgba(229, 62, 62, 0.2);
         }
 
         .logout-btn-compact:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 2px 8px rgba(229, 62, 62, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(229, 62, 62, 0.3);
         }
 
         .logout-btn-compact:active {
@@ -148,105 +188,289 @@
 
         .welcome-compact {
             text-align: center;
-            padding: 6px 0 10px;
+            padding: 8px 0 12px;
         }
 
         .welcome-compact h2 {
-            color: #2d3748;
-            font-size: 16px;
+            color: #ffffff;
+            font-size: 20px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .welcome-compact h2 span {
+            background: linear-gradient(135deg, #f6e05e, #f6ad55);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .welcome-compact p {
-            color: #718096;
-            font-size: 11px;
-            margin-top: 2px;
+            color: #a0aec0;
+            font-size: 13px;
+            margin-top: 3px;
         }
 
         .quick-actions-compact {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr 1fr;
-            gap: 6px;
+            gap: 8px;
             margin-top: 8px;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         .quick-action-btn-compact {
-            padding: 10px 4px;
-            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
-            border: 1.5px solid #e2e8f0;
-            border-radius: 10px;
+            padding: 12px 4px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1.5px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
+            backdrop-filter: blur(10px);
         }
 
         .quick-action-btn-compact:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            border-color: #667eea;
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
         }
 
         .quick-action-btn-compact:active {
             transform: scale(0.95);
-            background: #edf2f7;
         }
 
         .quick-action-btn-compact .icon {
-            font-size: 20px;
+            font-size: 24px;
             display: block;
-            margin-bottom: 2px;
+            margin-bottom: 3px;
         }
 
         .quick-action-btn-compact .label {
             font-size: 10px;
-            font-weight: 600;
-            color: #2d3748;
+            font-weight: 700;
+            color: #e2e8f0;
+            letter-spacing: 0.3px;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
         }
 
-        /* ===== TABS ===== */
+        .quick-action-btn-compact.primary-action {
+            background: linear-gradient(135deg, rgba(246, 224, 94, 0.15) 0%, rgba(246, 173, 85, 0.15) 100%);
+            border-color: rgba(246, 224, 94, 0.2);
+        }
+
+        .quick-action-btn-compact.primary-action .label {
+            color: #f6e05e;
+        }
+
+        .quick-action-btn-compact.primary-action:hover {
+            background: linear-gradient(135deg, rgba(246, 224, 94, 0.25) 0%, rgba(246, 173, 85, 0.25) 100%);
+            box-shadow: 0 4px 20px rgba(246, 224, 94, 0.1);
+        }
+
+        .summary-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            padding: 0 4px;
+        }
+
+        .summary-header-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .summary-header-title .emoji {
+            font-size: 18px;
+        }
+
+        .summary-refresh {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            color: #a0aec0;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 5px 14px;
+            border-radius: 10px;
+            transition: 0.2s;
+        }
+
+        .summary-refresh:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: #e2e8f0;
+        }
+
+        .summary-refresh:active {
+            transform: scale(0.95);
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+
+        .summary-card-item {
+            padding: 10px 4px;
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.2s ease;
+            border: 1.5px solid rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(10px);
+        }
+
+        .summary-card-item:hover {
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .summary-card-item.total {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.3) 0%, rgba(118, 75, 162, 0.3) 100%);
+            border-color: rgba(102, 126, 234, 0.3);
+        }
+
+        .summary-card-item.sc {
+            background: rgba(72, 187, 120, 0.15);
+            border-color: rgba(72, 187, 120, 0.2);
+        }
+
+        .summary-card-item.st {
+            background: rgba(237, 137, 54, 0.15);
+            border-color: rgba(237, 137, 54, 0.2);
+        }
+
+        .summary-card-item.obc {
+            background: rgba(66, 153, 225, 0.15);
+            border-color: rgba(66, 153, 225, 0.2);
+        }
+
+        .summary-card-item.general {
+            background: rgba(229, 62, 62, 0.15);
+            border-color: rgba(229, 62, 62, 0.2);
+        }
+
+        .summary-card-item .summary-number {
+            font-size: 26px;
+            font-weight: 800;
+            display: block;
+            line-height: 1.2;
+        }
+
+        .summary-card-item.total .summary-number {
+            color: #b794f4;
+            text-shadow: 0 0 30px rgba(183, 148, 244, 0.2);
+        }
+
+        .summary-card-item.sc .summary-number {
+            color: #68d391;
+            text-shadow: 0 0 30px rgba(104, 211, 145, 0.15);
+        }
+
+        .summary-card-item.st .summary-number {
+            color: #f6ad55;
+            text-shadow: 0 0 30px rgba(246, 173, 85, 0.15);
+        }
+
+        .summary-card-item.obc .summary-number {
+            color: #63b3ed;
+            text-shadow: 0 0 30px rgba(99, 179, 237, 0.15);
+        }
+
+        .summary-card-item.general .summary-number {
+            color: #fc8181;
+            text-shadow: 0 0 30px rgba(252, 129, 129, 0.15);
+        }
+
+        .summary-card-item .summary-label {
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: block;
+            line-height: 1.4;
+        }
+
+        .summary-card-item.total .summary-label {
+            color: #b794f4;
+        }
+
+        .summary-card-item.sc .summary-label {
+            color: #68d391;
+        }
+
+        .summary-card-item.st .summary-label {
+            color: #f6ad55;
+        }
+
+        .summary-card-item.obc .summary-label {
+            color: #63b3ed;
+        }
+
+        .summary-card-item.general .summary-label {
+            color: #fc8181;
+        }
+
+        .summary-card-item .summary-number.loading {
+            opacity: 0.5;
+            animation: pulse 1s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
         .tabs {
             display: flex;
-            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
-            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 14px;
             padding: 4px;
-            margin-bottom: 20px;
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.04);
+            margin-bottom: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
         }
 
         .tab {
             flex: 1;
-            padding: 10px;
+            padding: 12px;
             text-align: center;
             border: none;
             background: transparent;
-            font-size: 14px;
-            font-weight: 600;
-            color: #718096;
+            font-size: 15px;
+            font-weight: 700;
+            color: #a0aec0;
             cursor: pointer;
-            border-radius: 8px;
+            border-radius: 10px;
             transition: all 0.3s ease;
         }
 
         .tab.active {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.4) 0%, rgba(118, 75, 162, 0.4) 100%);
+            color: #ffffff;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.15);
+            border: 1px solid rgba(102, 126, 234, 0.2);
         }
 
         .tab:active {
             transform: scale(0.96);
         }
 
-        /* ===== FORM ===== */
         .form-group {
-            margin-bottom: 12px;
+            margin-bottom: 14px;
         }
 
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 12px;
+            gap: 12px;
+            margin-bottom: 14px;
         }
 
         .form-row .form-group {
@@ -255,55 +479,66 @@
 
         label {
             display: block;
-            font-size: 11px;
-            font-weight: 600;
-            color: #2d3748;
-            margin-bottom: 3px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #e2e8f0;
+            margin-bottom: 5px;
             letter-spacing: 0.3px;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
         }
 
         .required {
-            color: #e53e3e;
-            margin-left: 2px;
+            color: #fc8181;
+            margin-left: 3px;
+            text-shadow: 0 0 20px rgba(252, 129, 129, 0.2);
         }
 
         input, select {
             width: 100%;
-            padding: 10px 12px;
-            font-size: 14px;
-            border: 2px solid #e2e8f0;
-            border-radius: 8px;
+            padding: 12px 14px;
+            font-size: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
             transition: all 0.3s ease;
-            background: #f7fafc;
-            color: #2d3748;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            color: #ffffff;
+            font-weight: 500;
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 13px;
+        }
+
+        select {
+            color: #ffffff;
+            -webkit-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='rgba(255,255,255,0.6)' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            padding-right: 40px;
+            cursor: pointer;
+        }
+
+        select option {
+            background: #2d1b4e;
+            color: #ffffff;
+            padding: 8px;
         }
 
         input:focus, select:focus {
             outline: none;
-            border-color: #667eea;
-            background: white;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        input::placeholder {
-            color: #a0aec0;
-            font-size: 13px;
+            border-color: rgba(102, 126, 234, 0.4);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.05);
         }
 
         input:read-only {
-            background: #f0fff4;
-            border-color: #48bb78;
-            color: #22543d;
-        }
-
-        select {
-            -webkit-appearance: none;
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%234a5568' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 12px center;
-            padding-right: 32px;
-            cursor: pointer;
+            background: rgba(72, 187, 120, 0.08);
+            border-color: rgba(72, 187, 120, 0.2);
+            color: #68d391;
         }
 
         .password-toggle {
@@ -311,45 +546,64 @@
         }
 
         .password-toggle input {
-            padding-right: 40px;
+            padding-right: 48px;
         }
 
         .toggle-btn {
             position: absolute;
-            right: 10px;
+            right: 14px;
             top: 50%;
             transform: translateY(-50%);
             background: none;
             border: none;
-            font-size: 16px;
+            font-size: 18px;
             cursor: pointer;
-            color: #718096;
+            color: rgba(255, 255, 255, 0.4);
             padding: 4px;
+            transition: 0.2s;
         }
 
         .toggle-btn:hover {
-            color: #2d3748;
+            color: rgba(255, 255, 255, 0.8);
         }
 
         .submit-btn {
             width: 100%;
-            padding: 14px;
+            padding: 15px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            border-radius: 10px;
-            font-size: 16px;
+            border-radius: 14px;
+            font-size: 17px;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin-top: 6px;
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.35);
-            letter-spacing: 0.3px;
+            margin-top: 8px;
+            box-shadow: 0 4px 25px rgba(102, 126, 234, 0.3);
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+            opacity: 0;
+            transition: 0.5s;
+        }
+
+        .submit-btn:hover::before {
+            opacity: 1;
         }
 
         .submit-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.45);
+            box-shadow: 0 6px 30px rgba(102, 126, 234, 0.4);
         }
 
         .submit-btn:active {
@@ -363,29 +617,31 @@
 
         .submit-btn.secondary {
             background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
-            box-shadow: 0 4px 12px rgba(72, 187, 120, 0.35);
+            box-shadow: 0 4px 25px rgba(72, 187, 120, 0.25);
         }
 
         .submit-btn.secondary:hover {
-            box-shadow: 0 6px 20px rgba(72, 187, 120, 0.45);
+            box-shadow: 0 6px 30px rgba(72, 187, 120, 0.35);
         }
 
         .btn-cancel {
             width: 100%;
-            padding: 12px;
-            background: #e2e8f0;
-            color: #475569;
-            border: none;
-            border-radius: 10px;
-            font-size: 14px;
+            padding: 13px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #a0aec0;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            font-size: 15px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin-top: 6px;
+            margin-top: 8px;
         }
 
         .btn-cancel:hover {
-            background: #cbd5e1;
+            background: rgba(255, 255, 255, 0.08);
+            color: #e2e8f0;
+            border-color: rgba(255, 255, 255, 0.12);
         }
 
         .btn-cancel:active {
@@ -393,81 +649,90 @@
         }
 
         .hint-text {
-            font-size: 10px;
-            color: #718096;
-            margin-top: 2px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-top: 4px;
         }
 
         .auto-generated {
-            background: #f0fff4 !important;
-            border-color: #48bb78 !important;
-            color: #22543d !important;
+            background: rgba(72, 187, 120, 0.08) !important;
+            border-color: rgba(72, 187, 120, 0.2) !important;
+            color: #68d391 !important;
         }
 
         .lookup-success {
-            background: #f0fff4 !important;
-            border-color: #48bb78 !important;
-            color: #22543d !important;
+            background: rgba(72, 187, 120, 0.08) !important;
+            border-color: rgba(72, 187, 120, 0.2) !important;
+            color: #68d391 !important;
         }
 
         .lookup-error {
-            background: #fff5f5 !important;
-            border-color: #fc8181 !important;
-            color: #742a2a !important;
+            background: rgba(229, 62, 62, 0.08) !important;
+            border-color: rgba(229, 62, 62, 0.2) !important;
+            color: #fc8181 !important;
         }
 
         .lookup-loading {
-            background: #fffbeb !important;
-            border-color: #f6ad55 !important;
-            color: #744210 !important;
+            background: rgba(237, 137, 54, 0.08) !important;
+            border-color: rgba(237, 137, 54, 0.2) !important;
+            color: #f6ad55 !important;
         }
 
-        /* ===== MESSAGE ===== */
         .message {
             display: none;
-            padding: 10px 14px;
-            border-radius: 10px;
+            padding: 12px 16px;
+            border-radius: 12px;
             text-align: center;
-            font-weight: 600;
-            margin-top: 10px;
-            animation: slideUp 0.4s ease;
+            font-weight: 700;
+            margin-top: 12px;
+            animation: slideUp 0.3s ease;
             word-wrap: break-word;
             white-space: pre-line;
-            font-size: 13px;
+            font-size: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
         }
 
         .message.success {
-            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
-            color: white;
+            background: rgba(72, 187, 120, 0.15);
+            color: #68d391;
+            border-color: rgba(72, 187, 120, 0.2);
+            box-shadow: 0 0 30px rgba(72, 187, 120, 0.05);
         }
 
         .message.error {
-            background: linear-gradient(135deg, #fc8181 0%, #e53e3e 100%);
-            color: white;
+            background: rgba(229, 62, 62, 0.15);
+            color: #fc8181;
+            border-color: rgba(229, 62, 62, 0.2);
+            box-shadow: 0 0 30px rgba(229, 62, 62, 0.05);
         }
 
         .message.info {
-            background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
-            color: white;
+            background: rgba(66, 153, 225, 0.15);
+            color: #63b3ed;
+            border-color: rgba(66, 153, 225, 0.2);
+            box-shadow: 0 0 30px rgba(66, 153, 225, 0.05);
         }
 
         .message.warning {
-            background: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%);
-            color: white;
+            background: rgba(237, 137, 54, 0.15);
+            color: #f6ad55;
+            border-color: rgba(237, 137, 54, 0.2);
+            box-shadow: 0 0 30px rgba(237, 137, 54, 0.05);
         }
 
         @keyframes slideUp {
-            from { opacity: 0; transform: translateY(15px); }
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         .loading {
             display: inline-block;
-            width: 18px;
-            height: 18px;
-            border: 2.5px solid rgba(255,255,255,0.3);
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.2);
             border-radius: 50%;
-            border-top-color: white;
+            border-top-color: #ffffff;
             animation: spin 0.7s ease infinite;
             vertical-align: middle;
             margin-right: 8px;
@@ -483,36 +748,36 @@
 
         .form-footer {
             text-align: center;
-            margin-top: 12px;
-            font-size: 13px;
-            color: #718096;
+            margin-top: 14px;
+            font-size: 14px;
+            color: #a0aec0;
         }
 
         .form-footer a {
-            color: #667eea;
-            font-weight: 600;
+            color: #f6e05e;
+            font-weight: 700;
             text-decoration: none;
+            text-shadow: 0 0 20px rgba(246, 224, 94, 0.1);
         }
 
         .form-footer a:hover {
-            color: #764ba2;
             text-decoration: underline;
+            color: #f6ad55;
         }
 
-        /* ===== DATA ENTRY SECTION ===== */
         .data-entry-section {
             margin-top: 14px;
             padding-top: 14px;
-            border-top: 2px solid #f0f0f0;
+            border-top: 2px solid rgba(255, 255, 255, 0.05);
         }
 
         .data-entry-section h3 {
-            color: #2d3748;
-            margin-bottom: 12px;
-            font-size: 16px;
+            color: #ffffff;
+            margin-bottom: 14px;
+            font-size: 20px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
-        /* ===== MODAL ===== */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -520,8 +785,8 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(4px);
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(8px);
             z-index: 1000;
             padding: 20px;
             align-items: center;
@@ -533,51 +798,53 @@
         }
 
         .modal {
-            background: white;
+            background: rgba(26, 11, 46, 0.95);
+            backdrop-filter: blur(20px);
             max-width: 400px;
             width: 100%;
-            border-radius: 20px;
-            padding: 20px;
+            border-radius: 18px;
+            padding: 24px;
             animation: slideUp 0.3s ease;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.06);
         }
 
         .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 16px;
+            margin-bottom: 18px;
         }
 
         .modal-header h3 {
-            color: #2d3748;
-            font-size: 18px;
+            color: #ffffff;
+            font-size: 20px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
         .modal-close {
             background: none;
             border: none;
-            font-size: 22px;
+            font-size: 24px;
             cursor: pointer;
-            color: #718096;
-            padding: 2px 6px;
+            color: #a0aec0;
+            padding: 4px 8px;
             transition: all 0.3s ease;
         }
 
         .modal-close:hover {
-            color: #2d3748;
+            color: #fc8181;
             transform: rotate(90deg);
         }
 
-        /* ===== PHOTO UPLOAD WITH CROPPER ===== */
         .photo-attach-area {
-            border: 2px dashed #e2e8f0;
-            border-radius: 10px;
+            border: 2px dashed rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
             padding: 14px;
             text-align: center;
             transition: all 0.3s ease;
-            background: #f7fafc;
-            min-height: 110px;
+            background: rgba(255, 255, 255, 0.03);
+            min-height: 100px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -586,44 +853,44 @@
         }
 
         .photo-attach-area.has-photo {
-            border-color: #48bb78;
-            background: #f0fff4;
+            border-color: rgba(72, 187, 120, 0.3);
+            background: rgba(72, 187, 120, 0.05);
         }
 
         .photo-attach-area .photo-icon {
             font-size: 36px;
-            margin-bottom: 3px;
+            margin-bottom: 4px;
         }
 
         .photo-attach-area .photo-text {
-            color: #718096;
-            font-size: 13px;
+            color: #e2e8f0;
+            font-size: 14px;
         }
 
         .photo-attach-area .photo-sub-text {
-            color: #a0aec0;
-            font-size: 10px;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 12px;
             margin-top: 2px;
         }
 
         .photo-attach-area .photo-preview-img {
             max-width: 100%;
-            max-height: 140px;
-            border-radius: 6px;
+            max-height: 120px;
+            border-radius: 8px;
             margin-top: 6px;
             object-fit: contain;
         }
 
         .photo-attach-area .remove-photo-btn {
             position: absolute;
-            top: 6px;
-            right: 6px;
-            background: #fc8181;
+            top: 8px;
+            right: 8px;
+            background: rgba(229, 62, 62, 0.8);
             color: white;
             border: none;
             border-radius: 50%;
-            width: 24px;
-            height: 24px;
+            width: 28px;
+            height: 28px;
             font-size: 14px;
             cursor: pointer;
             display: none;
@@ -638,34 +905,36 @@
 
         .photo-attach-area .photo-actions {
             display: flex;
-            gap: 8px;
+            gap: 10px;
             margin-top: 8px;
             flex-wrap: wrap;
             justify-content: center;
         }
 
         .photo-attach-area .photo-actions button {
-            padding: 6px 14px;
+            padding: 8px 18px;
             border: none;
-            border-radius: 6px;
-            font-weight: 600;
+            border-radius: 10px;
+            font-weight: 700;
             cursor: pointer;
-            font-size: 12px;
+            font-size: 13px;
             transition: all 0.3s ease;
         }
 
         .photo-attach-area .btn-camera {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
         }
 
         .photo-attach-area .btn-gallery {
             background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
             color: white;
+            box-shadow: 0 4px 15px rgba(72, 187, 120, 0.2);
         }
 
         .photo-attach-area .photo-actions button:hover {
-            transform: scale(1.04);
+            transform: scale(1.05);
         }
 
         .photo-attach-area .photo-actions button:active {
@@ -677,9 +946,9 @@
         }
 
         .photo-status {
-            font-size: 11px;
-            color: #718096;
-            margin-top: 4px;
+            font-size: 13px;
+            color: #e2e8f0;
+            margin-top: 5px;
             display: none;
         }
 
@@ -688,14 +957,13 @@
         }
 
         .photo-status.attached {
-            color: #48bb78;
+            color: #68d391;
         }
 
         .photo-status.error {
             color: #fc8181;
         }
 
-        /* ===== CROPPER MODAL ===== */
         .cropper-overlay {
             display: none;
             position: fixed;
@@ -703,9 +971,10 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0,0,0,0.85);
+            background: rgba(0,0,0,0.92);
+            backdrop-filter: blur(10px);
             z-index: 2000;
-            padding: 16px;
+            padding: 20px;
             align-items: center;
             justify-content: center;
             flex-direction: column;
@@ -716,14 +985,17 @@
         }
 
         .cropper-container {
-            background: #1a202c;
-            border-radius: 16px;
-            max-width: 480px;
+            background: rgba(26, 11, 46, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 18px;
+            max-width: 460px;
             width: 100%;
             max-height: 90vh;
             overflow: hidden;
             position: relative;
-            padding: 16px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
         }
 
         .cropper-header {
@@ -731,29 +1003,30 @@
             justify-content: space-between;
             align-items: center;
             color: white;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
         }
 
         .cropper-header h3 {
-            font-size: 16px;
+            font-size: 20px;
             font-weight: 700;
+            color: #ffffff;
         }
 
         .cropper-header .close-cropper {
             background: none;
             border: none;
             color: #fc8181;
-            font-size: 24px;
+            font-size: 26px;
             cursor: pointer;
-            padding: 0 8px;
+            padding: 4px 8px;
         }
 
         .cropper-wrapper {
             position: relative;
             width: 100%;
             overflow: hidden;
-            border-radius: 8px;
-            background: #2d3748;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.3);
             touch-action: none;
             user-select: none;
             -webkit-user-select: none;
@@ -766,11 +1039,10 @@
             pointer-events: none;
         }
 
-        /* Crop Box Overlay */
         .crop-box {
             position: absolute;
             border: 2px solid #48bb78;
-            box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.6);
             cursor: move;
             touch-action: none;
             user-select: none;
@@ -784,6 +1056,7 @@
             background: #48bb78;
             border: 2px solid white;
             border-radius: 50%;
+            box-shadow: 0 0 15px rgba(72, 187, 120, 0.3);
         }
 
         .crop-box .crop-handle.nw { top: -8px; left: -8px; cursor: nw-resize; }
@@ -796,49 +1069,74 @@
         .crop-box .crop-handle.e { top: 50%; right: -8px; transform: translateY(-50%); cursor: e-resize; }
 
         .crop-info {
-            color: white;
-            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
             text-align: center;
-            padding: 8px 0;
-            opacity: 0.7;
+            padding: 10px 0;
         }
 
         .cropper-actions {
             display: flex;
-            gap: 10px;
-            margin-top: 12px;
+            gap: 12px;
+            margin-top: 14px;
         }
 
         .cropper-actions button {
             flex: 1;
-            padding: 12px;
+            padding: 14px;
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             font-weight: 700;
-            font-size: 14px;
+            font-size: 15px;
             cursor: pointer;
             transition: all 0.3s ease;
         }
 
         .cropper-actions .btn-crop-cancel {
-            background: #4a5568;
-            color: white;
+            background: rgba(255, 255, 255, 0.05);
+            color: #a0aec0;
+            border: 1px solid rgba(255, 255, 255, 0.06);
         }
 
         .cropper-actions .btn-crop-cancel:hover {
-            background: #2d3748;
+            background: rgba(255, 255, 255, 0.08);
+            color: #e2e8f0;
         }
 
         .cropper-actions .btn-crop-apply {
             background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
             color: white;
+            box-shadow: 0 4px 25px rgba(72, 187, 120, 0.25);
         }
 
         .cropper-actions .btn-crop-apply:hover {
             transform: scale(1.02);
+            box-shadow: 0 6px 30px rgba(72, 187, 120, 0.35);
         }
 
-        /* ===== RESPONSIVE ===== */
+        .sync-status {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .sync-status .online {
+            color: #68d391;
+        }
+
+        .sync-status .offline {
+            color: #f6ad55;
+        }
+
+        .sync-status .syncing {
+            color: #63b3ed;
+            animation: pulse 1s ease-in-out infinite;
+        }
+
         @media (max-width: 480px) {
             .form-row {
                 grid-template-columns: 1fr;
@@ -846,46 +1144,74 @@
             }
             
             .form-row .form-group {
-                margin-bottom: 12px;
+                margin-bottom: 14px;
             }
             
             .container {
-                padding: 14px 12px 20px;
+                padding: 14px 12px 18px;
             }
             
             input, select {
-                font-size: 14px;
-                padding: 10px 12px;
+                font-size: 16px;
+                padding: 14px 16px;
             }
             
             .quick-actions-compact {
                 grid-template-columns: 1fr 1fr;
                 gap: 6px;
             }
+
+            .summary-grid {
+                grid-template-columns: 1fr 1fr 1fr;
+                gap: 6px;
+            }
+
+            .summary-grid .summary-card-item.total {
+                grid-column: 1 / -1;
+            }
             
             .quick-action-btn-compact {
-                padding: 8px 4px;
+                padding: 10px 4px;
             }
             
             .quick-action-btn-compact .icon {
-                font-size: 18px;
+                font-size: 22px;
+            }
+
+            .summary-card-item .summary-number {
+                font-size: 24px;
             }
 
             .photo-attach-area .photo-actions {
-                flex-direction: column;
+                flex-direction: row;
             }
 
             .photo-attach-area .photo-actions button {
-                width: 100%;
+                padding: 8px 14px;
+                font-size: 12px;
             }
 
             .cropper-container {
-                padding: 12px;
+                padding: 14px;
             }
 
             .crop-box .crop-handle {
                 width: 20px;
                 height: 20px;
+            }
+
+            .header h1 {
+                font-size: 22px;
+            }
+
+            .tab {
+                font-size: 14px;
+                padding: 10px;
+            }
+
+            .submit-btn {
+                font-size: 16px;
+                padding: 14px;
             }
         }
 
@@ -893,6 +1219,45 @@
             .form-row {
                 grid-template-columns: 1fr 1fr;
             }
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Colorful glow effects */
+        .glow-gold {
+            text-shadow: 0 0 30px rgba(246, 224, 94, 0.1);
+        }
+
+        .glow-purple {
+            text-shadow: 0 0 30px rgba(183, 148, 244, 0.1);
+        }
+
+        .glow-green {
+            text-shadow: 0 0 30px rgba(104, 211, 145, 0.1);
+        }
+
+        .glow-red {
+            text-shadow: 0 0 30px rgba(252, 129, 129, 0.1);
+        }
+
+        .glow-blue {
+            text-shadow: 0 0 30px rgba(99, 179, 237, 0.1);
         }
     </style>
 </head>
@@ -914,13 +1279,13 @@
             <div id="signinForm">
                 <form onsubmit="return handleSignIn(event)" id="signinFormElement">
                     <div class="form-group">
-                        <label>Mobile Number <span class="required">*</span></label>
+                        <label>📱 Mobile Number <span class="required">*</span></label>
                         <input type="tel" id="signinMobile" placeholder="Enter 10-digit mobile number" pattern="\d{10}" maxlength="10" required>
                         <div class="hint-text">Enter the mobile number used during registration</div>
                     </div>
 
                     <div class="form-group">
-                        <label>Password <span class="required">*</span></label>
+                        <label>🔒 Password <span class="required">*</span></label>
                         <div class="password-toggle">
                             <input type="password" id="signinPassword" placeholder="Enter your password" required>
                             <button type="button" class="toggle-btn" onclick="togglePassword('signinPassword')">👁️</button>
@@ -928,7 +1293,7 @@
                     </div>
 
                     <button type="submit" class="submit-btn" id="signinBtn">
-                        <span id="signinBtnText">Sign In</span>
+                        <span id="signinBtnText">🚀 Sign In</span>
                     </button>
                 </form>
                 <div class="form-footer">
@@ -940,18 +1305,18 @@
             <div id="signupForm" class="hidden">
                 <form onsubmit="return handleSignUp(event)" id="signupFormElement">
                     <div class="form-group">
-                        <label>Full Name <span class="required">*</span></label>
+                        <label>👤 Full Name <span class="required">*</span></label>
                         <input type="text" id="signupName" placeholder="Enter your full name" required autocomplete="name">
                     </div>
 
                     <div class="form-group">
-                        <label>Contact Number <span class="required">*</span></label>
+                        <label>📱 Contact Number <span class="required">*</span></label>
                         <input type="tel" id="signupContact" placeholder="10-digit mobile number" pattern="\d{10}" maxlength="10" required>
                         <div class="hint-text">Enter 10-digit mobile number</div>
                     </div>
 
                     <div class="form-group">
-                        <label>Password <span class="required">*</span></label>
+                        <label>🔒 Password <span class="required">*</span></label>
                         <div class="password-toggle">
                             <input type="password" id="signupPassword" placeholder="Min 6 characters" minlength="6" required>
                             <button type="button" class="toggle-btn" onclick="togglePassword('signupPassword')">👁️</button>
@@ -960,7 +1325,7 @@
                     </div>
 
                     <button type="submit" class="submit-btn" id="signupBtn">
-                        <span id="signupBtnText">Create Account</span>
+                        <span id="signupBtnText">✨ Create Account</span>
                     </button>
                 </form>
                 <div class="form-footer">
@@ -981,18 +1346,23 @@
                         <span class="user-status-compact approved" id="userStatusBadgeCompact">Approved</span>
                     </div>
                 </div>
-                <button class="logout-btn-compact" onclick="handleSignOut()">Logout</button>
+                <button class="logout-btn-compact" onclick="handleSignOut()">🚪 Logout</button>
             </div>
 
             <!-- COMPACT WELCOME -->
             <div class="welcome-compact">
                 <h2>👋 Welcome, <span id="welcomeNameCompact">User</span>!</h2>
                 <p>You are successfully signed in</p>
+                <div class="sync-status">
+                    <span id="syncIndicator">🔄 Syncing...</span>
+                    <span id="syncTime"></span>
+                    <span id="offlineBadge" class="hidden" style="color:#f6ad55;font-weight:700;">📡 OFFLINE</span>
+                </div>
             </div>
 
             <!-- COMPACT QUICK ACTIONS -->
             <div class="quick-actions-compact">
-                <div class="quick-action-btn-compact" onclick="showDataEntry()">
+                <div class="quick-action-btn-compact primary-action" onclick="showDataEntry()">
                     <span class="icon">📝</span>
                     <span class="label">New Entry</span>
                 </div>
@@ -1010,133 +1380,148 @@
                 </div>
             </div>
 
+            <!-- SUMMARY COUNTS -->
+            <div class="summary-header">
+                <span class="summary-header-title"><span class="emoji">📊</span> Summary</span>
+                <button class="summary-refresh" onclick="fetchSummary()">↻ Refresh</button>
+            </div>
+
+            <div class="summary-grid" id="summaryGrid">
+                <div class="summary-card-item total" id="totalCard">
+                    <span class="summary-number" id="totalCount">—</span>
+                    <span class="summary-label">⭐ Total</span>
+                </div>
+                <div class="summary-card-item sc" id="scCard">
+                    <span class="summary-number" id="countSC">0</span>
+                    <span class="summary-label">🌿 SC</span>
+                </div>
+                <div class="summary-card-item st" id="stCard">
+                    <span class="summary-number" id="countST">0</span>
+                    <span class="summary-label">🔥 ST</span>
+                </div>
+                <div class="summary-card-item obc" id="obcCard">
+                    <span class="summary-number" id="countOBC">0</span>
+                    <span class="summary-label">💎 OBC</span>
+                </div>
+                <div class="summary-card-item general" id="generalCard">
+                    <span class="summary-number" id="countGeneral">0</span>
+                    <span class="summary-label">🌟 Gen</span>
+                </div>
+            </div>
+
             <!-- Data Entry Section -->
             <div id="dataEntrySection" class="data-entry-section hidden">
                 <h3>📋 New Job Card Entry</h3>
                 <form onsubmit="return submitJobCardData(event)" id="dataEntryForm">
-                    <!-- Hidden field for application number - not visible to user -->
                     <input type="hidden" id="uniqueApplicationNumber" name="UNIQUE_APPLICATION_NUMBER">
 
-                    <!-- Row 1: Name of Applicant - This generates the application number silently -->
                     <div class="form-group">
-                        <label>Name of Applicant of Job Card <span class="required">*</span></label>
+                        <label>👤 Name of Applicant <span class="required">*</span></label>
                         <input type="text" name="NAME_OF_APPLICANT" id="applicantNameInput" 
                                placeholder="Enter applicant's full name" required
                                oninput="generateApplicationNumberSilently(this.value)">
-                        <div class="hint-text">Application number will be auto-generated in the background</div>
+                        <div class="hint-text">Application number auto-generated</div>
                     </div>
 
-                    <!-- Row 2: Family Members Details -->
                     <div class="form-group">
-                        <label>Family Members Details <span class="required">*</span></label>
+                        <label>👪 Family Members Details <span class="required">*</span></label>
                         <input type="text" name="FAMILY_MEMBERS_DETAILS" placeholder="Family members with relation" required>
                     </div>
 
-                    <!-- Row 3: Date of Birth + Gender -->
                     <div class="form-row">
                         <div class="form-group">
-                            <label>Date of Birth <span class="required">*</span></label>
+                            <label>📅 Date of Birth <span class="required">*</span></label>
                             <input type="date" name="DATE_OF_BIRTH" required>
                         </div>
                         <div class="form-group">
-                            <label>Gender <span class="required">*</span></label>
+                            <label>⚧️ Gender <span class="required">*</span></label>
                             <select name="GENDER" required>
-                                <option value="">Select Gender</option>
-                                <option value="MALE">Male</option>
-                                <option value="FEMALE">Female</option>
-                                <option value="TRANS">Transgender</option>
+                                <option value="">Select</option>
+                                <option value="MALE">👨 Male</option>
+                                <option value="FEMALE">👩 Female</option>
+                                <option value="TRANS">🧑 Transgender</option>
                             </select>
                         </div>
                     </div>
 
-                    <!-- Row 4: Category + EPIC Number -->
                     <div class="form-row">
                         <div class="form-group">
-                            <label>SC/ST/OBC/General <span class="required">*</span></label>
-                            <select name="SC_ST_OBC_GENERAL" required>
-                                <option value="">Select Category</option>
-                                <option value="SC">SC</option>
-                                <option value="ST">ST</option>
-                                <option value="OBC">OBC</option>
-                                <option value="GENERAL">General</option>
+                            <label>🏷️ SC/ST/OBC/Gen <span class="required">*</span></label>
+                            <select name="SC_ST_OBC_GENERAL" id="casteSelect" required>
+                                <option value="">Select</option>
+                                <option value="SC">🌿 SC</option>
+                                <option value="ST">🔥 ST</option>
+                                <option value="OBC">💎 OBC</option>
+                                <option value="GENERAL">🌟 General</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>EPIC Number (Full) <span class="required">*</span></label>
-                            <input type="text" name="EPIC_NUMBER" id="epicNumber" placeholder="Enter Voter ID card number" required>
-                            <div class="hint-text">Enter EPIC number to auto-fill Name & Guardian from SIR sheet</div>
+                            <label>🪪 EPIC Number <span class="required">*</span></label>
+                            <input type="text" name="EPIC_NUMBER" id="epicNumber" placeholder="Voter ID number" required>
+                            <div class="hint-text">Auto-fills Name & Guardian</div>
                         </div>
                     </div>
 
-                    <!-- Row 4B: NAME AS PER ECI + GURDIAN AS PER ECI (Auto-filled) -->
                     <div class="form-row">
                         <div class="form-group">
-                            <label>NAME AS PER ECI <span class="required">*</span></label>
-                            <input type="text" name="NAME_AS_PER_ECI" id="nameAsPerECI" placeholder="Auto-fills from EPIC" readonly>
-                            <div class="hint-text">Auto-filled from SIR sheet</div>
+                            <label>📝 Name as per ECI <span class="required">*</span></label>
+                            <input type="text" name="NAME_AS_PER_ECI" id="nameAsPerECI" placeholder="Auto-fills" readonly>
                         </div>
                         <div class="form-group">
-                            <label>GURDIAN AS PER ECI <span class="required">*</span></label>
-                            <input type="text" name="GURDIAN_AS_PER_ECI" id="guardianAsPerECI" placeholder="Auto-fills from EPIC" readonly>
-                            <div class="hint-text">Auto-filled from SIR sheet</div>
+                            <label>👨‍👦 Guardian as per ECI <span class="required">*</span></label>
+                            <input type="text" name="GURDIAN_AS_PER_ECI" id="guardianAsPerECI" placeholder="Auto-fills" readonly>
                         </div>
                     </div>
 
-                    <!-- Row 5: Aadhaar Number + Mobile Number -->
                     <div class="form-row">
                         <div class="form-group">
-                            <label>Aadhaar Number <span class="required">*</span></label>
+                            <label>🆔 Aadhaar Number <span class="required">*</span></label>
                             <input type="text" name="AADHAAR_NUMBER" placeholder="12-digit Aadhaar" pattern="\d{12}" maxlength="12" required>
                         </div>
                         <div class="form-group">
-                            <label>Mobile Number (Linked with Aadhaar) <span class="required">*</span></label>
+                            <label>📱 Mobile Number <span class="required">*</span></label>
                             <input type="tel" name="MOBILE_NUMBER" placeholder="10-digit mobile" pattern="\d{10}" maxlength="10" required>
                         </div>
                     </div>
 
-                    <!-- Row 6: Bank Name + Branch -->
                     <div class="form-row">
                         <div class="form-group">
-                            <label>Name of Bank <span class="required">*</span></label>
+                            <label>🏦 Bank Name <span class="required">*</span></label>
                             <select name="NAME_OF_BANK" id="bankNameSelect" required onchange="updateBranches()">
                                 <option value="">Select Bank</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>Branch <span class="required">*</span></label>
+                            <label>🏛️ Branch <span class="required">*</span></label>
                             <select name="BRANCH" id="branchSelect" required onchange="updateIFSC()">
                                 <option value="">Select Branch</option>
                             </select>
                         </div>
                     </div>
 
-                    <!-- Row 7: IFSC Code + Full Account Number -->
                     <div class="form-row">
                         <div class="form-group">
-                            <label>IFSC Code <span class="required">*</span></label>
+                            <label>🔢 IFSC Code <span class="required">*</span></label>
                             <input type="text" name="IFSC" id="ifscInput" placeholder="Auto-filled" readonly>
                         </div>
                         <div class="form-group">
-                            <label>Full Account Number <span class="required">*</span></label>
-                            <input type="text" name="FULL_ACCOUNT_NUMBER" placeholder="Enter full account number" required>
+                            <label>💰 Account Number <span class="required">*</span></label>
+                            <input type="text" name="FULL_ACCOUNT_NUMBER" placeholder="Full account number" required>
                         </div>
                     </div>
 
-                    <!-- Row 8: WBSEDCL Consumer ID -->
                     <div class="form-group">
-                        <label>WBSEDCL Consumer ID</label>
+                        <label>⚡ WBSEDCL Consumer ID</label>
                         <input type="text" name="WBSEDCL_CONSUMER_ID" placeholder="Consumer ID (if available)">
                     </div>
 
-                    <!-- Row 9: Applicant Photograph WITH CROPPER -->
                     <div class="form-group">
-                        <label>Applicant Photograph <span class="required">*</span></label>
-                        
+                        <label>📸 Applicant Photograph <span class="required">*</span></label>
                         <div class="photo-attach-area" id="photoArea">
                             <div id="photoPlaceholder">
                                 <div class="photo-icon">📷</div>
                                 <div class="photo-text">Tap to attach photo</div>
-                                <div class="photo-sub-text">Take photo with camera or choose from gallery</div>
+                                <div class="photo-sub-text">Camera or Gallery</div>
                             </div>
                             <div id="photoPreview" class="hidden">
                                 <img id="capturedPhoto" class="photo-preview-img" src="" alt="Photo">
@@ -1149,23 +1534,15 @@
                             <input type="file" id="photoInput" accept="image/*" capture="environment" onchange="handlePhotoAttach(event)">
                             <input type="file" id="galleryInput" accept="image/*" onchange="handlePhotoAttach(event)">
                         </div>
-                        
                         <input type="hidden" name="APPLICANT_PHOTOGRAPH_LINK" id="photoLink">
-                        
                         <div class="photo-status" id="photoStatus"></div>
-                        
-                        <div class="hint-text" style="margin-top: 6px;">
-                            📸 Tap "Camera" or "Gallery" to select photo, then <strong>crop</strong> to passport size.
-                        </div>
+                        <div class="hint-text">📸 Select photo, then <strong style="color:#f6e05e;">crop</strong> to passport size</div>
                     </div>
 
                     <button type="submit" class="submit-btn secondary" id="dataSubmitBtn">
-                        <span id="dataSubmitBtnText">Submit Entry</span>
+                        <span id="dataSubmitBtnText">💾 Submit Entry</span>
                     </button>
-                    
-                    <button type="button" class="btn-cancel" onclick="hideDataEntry()">
-                        Cancel
-                    </button>
+                    <button type="button" class="btn-cancel" onclick="hideDataEntry()">✖ Cancel</button>
                 </form>
             </div>
         </div>
@@ -1183,28 +1560,28 @@
             </div>
             <form onsubmit="return handleChangePassword(event)" id="changePasswordForm">
                 <div class="form-group">
-                    <label>Current Password <span class="required">*</span></label>
+                    <label>🔒 Current Password <span class="required">*</span></label>
                     <div class="password-toggle">
                         <input type="password" id="currentPassword" placeholder="Enter current password" required>
                         <button type="button" class="toggle-btn" onclick="togglePassword('currentPassword')">👁️</button>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label>New Password <span class="required">*</span></label>
+                    <label>🔑 New Password <span class="required">*</span></label>
                     <div class="password-toggle">
                         <input type="password" id="newPassword" placeholder="Min 6 characters" minlength="6" required>
                         <button type="button" class="toggle-btn" onclick="togglePassword('newPassword')">👁️</button>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label>Confirm New Password <span class="required">*</span></label>
+                    <label>✅ Confirm New Password <span class="required">*</span></label>
                     <div class="password-toggle">
                         <input type="password" id="confirmPassword" placeholder="Confirm new password" required>
                         <button type="button" class="toggle-btn" onclick="togglePassword('confirmPassword')">👁️</button>
                     </div>
                 </div>
                 <button type="submit" class="submit-btn" id="changePwdBtn">
-                    <span id="changePwdBtnText">Update Password</span>
+                    <span id="changePwdBtnText">🔄 Update Password</span>
                 </button>
             </form>
         </div>
@@ -1230,7 +1607,7 @@
                     <div class="crop-handle se"></div>
                 </div>
             </div>
-            <div class="crop-info">📐 Drag to adjust crop area (Passport size: 2x2 ratio)</div>
+            <div class="crop-info">📐 Drag to adjust crop area</div>
             <div class="cropper-actions">
                 <button class="btn-crop-cancel" onclick="closeCropper()">Cancel</button>
                 <button class="btn-crop-apply" id="applyCropBtn">✅ Apply Crop</button>
@@ -1240,37 +1617,36 @@
 
     <script>
         // ============================================
-        // CONFIGURATION - UPDATE THIS URL
+        // CONFIGURATION
         // ============================================
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbysdNM-oJwpOWwQY3ww_g0ytKj_Ih1rFmEkssLWMdtnudNxPVgSBlwl5O4GHYINucWvEQ/exec';
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzEyK8gKi_xJs78gedQmBysrG5HeG7dWVob-JACNkF4dnKChliSK4pvZET5EDHnbZAAxg/exec';
+        
         const APP = {
             currentUser: null,
             sessionToken: null,
             currentTab: 'signin',
-            generatedAppNumber: null // Store generated number silently
+            generatedAppNumber: null,
+            isOnline: navigator.onLine,
+            syncQueue: [],
+            isSyncing: false,
+            lastSyncTime: null,
+            cachedData: {
+                entries: [],
+                banks: [],
+                summary: null,
+                lastUpdate: null
+            }
         };
 
-        // ============================================
-        // BANK DATA
-        // ============================================
         let bankData = [];
         let branchMap = {};
-
-        // ============================================
-        // PHOTO VARIABLES
-        // ============================================
         let attachedPhotoFile = null;
         let attachedPhotoDataURL = null;
         let isPhotoAttached = false;
         let originalImageFile = null;
         let originalImageDataURL = null;
-
-        // ============================================
-        // CROPPER VARIABLES
-        // ============================================
         let cropperActive = false;
         let cropStartX = 0, cropStartY = 0;
-        let cropEndX = 0, cropEndY = 0;
         let isDragging = false;
         let isResizing = false;
         let resizeHandle = '';
@@ -1278,38 +1654,264 @@
         let cropWrapperElement = null;
         let cropBoxElement = null;
         let cropImageData = null;
-
-        // ============================================
-        // LOOKUP TIMER
-        // ============================================
         let lookupTimer = null;
-        let appNumberTimeout = null;
 
         // ============================================
-        // INITIALIZATION
+        // INIT
         // ============================================
         document.addEventListener('DOMContentLoaded', function() {
             const savedToken = localStorage.getItem('sessionToken');
             const savedUser = localStorage.getItem('currentUser');
+            
+            loadCachedData();
             
             if (savedToken && savedUser) {
                 APP.sessionToken = savedToken;
                 APP.currentUser = JSON.parse(savedUser);
                 showDashboard();
                 loadBankData();
+                fetchSummary();
+                setTimeout(startSync, 1000);
             }
+            
+            window.addEventListener('online', function() {
+                APP.isOnline = true;
+                updateSyncStatus();
+                startSync();
+                fetchSummary();
+            });
+            
+            window.addEventListener('offline', function() {
+                APP.isOnline = false;
+                updateSyncStatus();
+            });
             
             document.getElementById('signupContact').addEventListener('input', function(e) {
                 this.value = this.value.replace(/\D/g, '').slice(0, 10);
             });
-            
             document.getElementById('signinMobile').addEventListener('input', function(e) {
                 this.value = this.value.replace(/\D/g, '').slice(0, 10);
             });
 
             setupEpicLookup();
             initCropper();
+            document.getElementById('applyCropBtn').addEventListener('click', applyCrop);
         });
+
+        // ============================================
+        // CACHE MANAGEMENT
+        // ============================================
+        function loadCachedData() {
+            try {
+                const cached = localStorage.getItem('appCache');
+                if (cached) {
+                    APP.cachedData = JSON.parse(cached);
+                    if (APP.cachedData.lastUpdate && Date.now() - APP.cachedData.lastUpdate > 3600000) {
+                        APP.cachedData = { entries: [], banks: [], summary: null, lastUpdate: null };
+                        localStorage.removeItem('appCache');
+                    }
+                }
+            } catch(e) {
+                console.log('Cache load error:', e);
+            }
+        }
+
+        function saveCachedData() {
+            try {
+                APP.cachedData.lastUpdate = Date.now();
+                localStorage.setItem('appCache', JSON.stringify(APP.cachedData));
+            } catch(e) {
+                console.log('Cache save error:', e);
+            }
+        }
+
+        // ============================================
+        // SYNC SYSTEM
+        // ============================================
+        function updateSyncStatus() {
+            const indicator = document.getElementById('syncIndicator');
+            const timeEl = document.getElementById('syncTime');
+            const offlineBadge = document.getElementById('offlineBadge');
+            
+            if (!APP.isOnline) {
+                indicator.textContent = '📡 Offline';
+                indicator.style.color = '#f6ad55';
+                offlineBadge.classList.remove('hidden');
+            } else if (APP.isSyncing) {
+                indicator.textContent = '🔄 Syncing...';
+                indicator.style.color = '#63b3ed';
+                offlineBadge.classList.add('hidden');
+            } else {
+                indicator.textContent = '✅ Synced';
+                indicator.style.color = '#68d391';
+                offlineBadge.classList.add('hidden');
+                if (APP.lastSyncTime) {
+                    timeEl.textContent = new Date(APP.lastSyncTime).toLocaleTimeString();
+                }
+            }
+        }
+
+        async function startSync() {
+            if (!APP.isOnline || APP.isSyncing || !APP.sessionToken) return;
+            
+            APP.isSyncing = true;
+            updateSyncStatus();
+            
+            try {
+                await syncOfflineEntries();
+                await fetchLatestData();
+                APP.lastSyncTime = Date.now();
+                updateSyncStatus();
+            } catch(e) {
+                console.log('Sync error:', e);
+            } finally {
+                APP.isSyncing = false;
+                updateSyncStatus();
+            }
+        }
+
+        async function syncOfflineEntries() {
+            const pendingEntries = getPendingEntries();
+            if (pendingEntries.length === 0) return;
+            
+            try {
+                const formData = new URLSearchParams({
+                    action: 'sync_offline_data',
+                    offlineData: JSON.stringify(pendingEntries),
+                    sessionToken: APP.sessionToken
+                });
+                
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: formData
+                });
+                
+                const result = await response.json();
+                if (result.success) {
+                    clearPendingEntries();
+                    showMessage(`✅ Synced ${result.data.synced} offline entries`, 'success');
+                    setTimeout(() => hideMessage(), 3000);
+                    fetchSummary();
+                }
+            } catch(e) {
+                console.log('Offline sync error:', e);
+            }
+        }
+
+        async function fetchLatestData() {
+            try {
+                const formData = new URLSearchParams({
+                    action: 'get_sync_data',
+                    sessionToken: APP.sessionToken
+                });
+                
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: formData
+                });
+                
+                const result = await response.json();
+                if (result.success && result.data) {
+                    APP.cachedData.entries = result.data.entries || [];
+                    APP.cachedData.lastUpdate = Date.now();
+                    saveCachedData();
+                }
+            } catch(e) {
+                console.log('Fetch latest data error:', e);
+            }
+        }
+
+        // ============================================
+        // PENDING ENTRIES MANAGEMENT
+        // ============================================
+        function getPendingEntries() {
+            try {
+                const pending = localStorage.getItem('pendingEntries');
+                return pending ? JSON.parse(pending) : [];
+            } catch(e) {
+                return [];
+            }
+        }
+
+        function addPendingEntry(entry) {
+            try {
+                const pending = getPendingEntries();
+                pending.push(entry);
+                localStorage.setItem('pendingEntries', JSON.stringify(pending));
+            } catch(e) {
+                console.log('Add pending entry error:', e);
+            }
+        }
+
+        function clearPendingEntries() {
+            localStorage.removeItem('pendingEntries');
+        }
+
+        // ============================================
+        // FETCH SUMMARY
+        // ============================================
+        async function fetchSummary() {
+            const totalEl = document.getElementById('totalCount');
+            const scEl = document.getElementById('countSC');
+            const stEl = document.getElementById('countST');
+            const obcEl = document.getElementById('countOBC');
+            const genEl = document.getElementById('countGeneral');
+            
+            if (APP.cachedData.summary) {
+                const s = APP.cachedData.summary;
+                totalEl.textContent = s.totalEntries || '0';
+                scEl.textContent = s.SC || 0;
+                stEl.textContent = s.ST || 0;
+                obcEl.textContent = s.OBC || 0;
+                genEl.textContent = s.GENERAL || 0;
+            }
+            
+            if (!APP.isOnline) {
+                return;
+            }
+            
+            totalEl.textContent = '⋯';
+            totalEl.className = 'summary-number loading';
+            
+            try {
+                const formData = new URLSearchParams({
+                    action: 'get_summary'
+                });
+                if (APP.sessionToken) formData.append('sessionToken', APP.sessionToken);
+
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: formData
+                });
+                const result = await response.json();
+
+                if (result.success && result.data) {
+                    const d = result.data;
+                    APP.cachedData.summary = d;
+                    saveCachedData();
+                    
+                    totalEl.textContent = d.totalEntries ?? '0';
+                    totalEl.className = 'summary-number';
+                    scEl.textContent = d.SC ?? 0;
+                    stEl.textContent = d.ST ?? 0;
+                    obcEl.textContent = d.OBC ?? 0;
+                    genEl.textContent = d.GENERAL ?? 0;
+                } else {
+                    if (!APP.cachedData.summary) {
+                        totalEl.textContent = '⚠️';
+                        totalEl.className = 'summary-number';
+                    }
+                }
+            } catch (e) {
+                if (!APP.cachedData.summary) {
+                    totalEl.textContent = '❌';
+                    totalEl.className = 'summary-number';
+                }
+            }
+        }
 
         // ============================================
         // EPIC LOOKUP
@@ -1321,16 +1923,26 @@
 
             if (!epicInput || !nameField || !guardianField) return;
 
+            const epicCache = {};
+
             epicInput.addEventListener('input', function() {
                 const epicValue = this.value.trim();
-
                 if (epicValue === '') {
-                    nameField.value = '';
-                    guardianField.value = '';
-                    nameField.className = '';
-                    guardianField.className = '';
+                    nameField.value = ''; guardianField.value = '';
+                    nameField.className = ''; guardianField.className = '';
                     nameField.placeholder = 'Auto-fills from EPIC';
                     guardianField.placeholder = 'Auto-fills from EPIC';
+                    return;
+                }
+                
+                if (epicCache[epicValue]) {
+                    const data = epicCache[epicValue];
+                    nameField.value = data.voterName || '';
+                    guardianField.value = data.guardian || '';
+                    nameField.className = 'lookup-success';
+                    guardianField.className = 'lookup-success';
+                    nameField.placeholder = '✓ Found from EPIC (cached)';
+                    guardianField.placeholder = '✓ Found from EPIC (cached)';
                     return;
                 }
 
@@ -1346,40 +1958,30 @@
                             action: 'get_voter_details',
                             epicNumber: epicValue
                         });
-
                         const response = await fetch(SCRIPT_URL, {
                             method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/x-www-form-urlencoded',
-                            },
+                            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                             body: formData
                         });
-
                         const result = await response.json();
-
                         if (result.success && result.data) {
+                            epicCache[epicValue] = result.data;
                             nameField.value = result.data.voterName || '';
                             guardianField.value = result.data.guardian || '';
                             nameField.className = 'lookup-success';
                             guardianField.className = 'lookup-success';
                             nameField.placeholder = '✓ Found from EPIC';
                             guardianField.placeholder = '✓ Found from EPIC';
-                            
-                            showMessage('✅ Voter found! Name and Guardian auto-filled.', 'success');
-                            setTimeout(() => hideMessage(), 2500);
+                            showMessage('✅ Voter found!', 'success');
+                            setTimeout(() => hideMessage(), 2000);
                         } else {
-                            nameField.value = '';
-                            guardianField.value = '';
+                            nameField.value = ''; guardianField.value = '';
                             nameField.className = 'lookup-error';
                             guardianField.className = 'lookup-error';
                             nameField.placeholder = '❌ No match found';
                             guardianField.placeholder = '❌ No match found';
-                            
-                            showMessage('⚠️ No voter found with EPIC: ' + epicValue, 'warning');
-                            setTimeout(() => hideMessage(), 2500);
                         }
                     } catch (error) {
-                        console.error('Lookup error:', error);
                         nameField.className = 'lookup-error';
                         guardianField.className = 'lookup-error';
                         nameField.placeholder = '❌ Error searching';
@@ -1390,81 +1992,76 @@
         }
 
         // ============================================
-        // LOAD BANK DATA
+        // BANK DATA
         // ============================================
         async function loadBankData() {
+            if (APP.cachedData.banks && APP.cachedData.banks.length > 0) {
+                bankData = APP.cachedData.banks;
+                populateBankDropdowns();
+                return;
+            }
+            
+            if (!APP.isOnline) {
+                showMessage('⚠️ Offline mode - using cached bank data if available', 'warning');
+                return;
+            }
+            
             try {
-                const formData = new URLSearchParams({
-                    action: 'get_banks'
-                });
-
+                const formData = new URLSearchParams({ action: 'get_banks' });
                 const response = await fetch(SCRIPT_URL, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                     body: formData
                 });
-
                 const result = await response.json();
-
                 if (result.success && result.data) {
                     bankData = result.data;
-                    
-                    const bankSelect = document.getElementById('bankNameSelect');
-                    const branchSelect = document.getElementById('branchSelect');
-                    
-                    while (bankSelect.options.length > 1) {
-                        bankSelect.remove(1);
-                    }
-                    
-                    const uniqueBanks = [...new Set(bankData.map(b => b.bankName))];
-                    
-                    uniqueBanks.forEach(bank => {
-                        const option = document.createElement('option');
-                        option.value = bank;
-                        option.textContent = bank;
-                        bankSelect.appendChild(option);
-                    });
+                    APP.cachedData.banks = bankData;
+                    saveCachedData();
+                    populateBankDropdowns();
                 }
             } catch (error) {
                 console.error('Failed to load bank data:', error);
+                if (bankData.length === 0) {
+                    showMessage('⚠️ Could not load bank data. Please check connection.', 'warning');
+                }
             }
+        }
+
+        function populateBankDropdowns() {
+            const bankSelect = document.getElementById('bankNameSelect');
+            while (bankSelect.options.length > 1) bankSelect.remove(1);
+            const uniqueBanks = [...new Set(bankData.map(b => b.bankName))];
+            uniqueBanks.forEach(bank => {
+                const option = document.createElement('option');
+                option.value = bank;
+                option.textContent = bank;
+                bankSelect.appendChild(option);
+            });
         }
 
         function updateBranches() {
             const bankName = document.getElementById('bankNameSelect').value;
             const branchSelect = document.getElementById('branchSelect');
             const ifscInput = document.getElementById('ifscInput');
-            
-            while (branchSelect.options.length > 1) {
-                branchSelect.remove(1);
-            }
-            
+            while (branchSelect.options.length > 1) branchSelect.remove(1);
             ifscInput.value = '';
-            
             if (!bankName) return;
-            
             const branches = bankData.filter(b => b.bankName === bankName);
             const uniqueBranches = [...new Set(branches.map(b => b.branch))];
-            
             uniqueBranches.forEach(branch => {
                 const option = document.createElement('option');
                 option.value = branch;
                 option.textContent = branch;
                 branchSelect.appendChild(option);
             });
-            
             branchMap = {};
-            branches.forEach(b => {
-                branchMap[b.branch] = b.ifsc;
-            });
+            branches.forEach(b => { branchMap[b.branch] = b.ifsc; });
         }
 
         function updateIFSC() {
             const branch = document.getElementById('branchSelect').value;
             const ifscInput = document.getElementById('ifscInput');
-            
             if (branch && branchMap[branch]) {
                 ifscInput.value = branchMap[branch];
                 ifscInput.classList.add('auto-generated');
@@ -1475,38 +2072,27 @@
         }
 
         // ============================================
-        // GENERATE UNIQUE APPLICATION NUMBER (SILENTLY)
+        // GENERATE APPLICATION NUMBER
         // ============================================
         async function generateApplicationNumberSilently(applicantName) {
             const hiddenField = document.getElementById('uniqueApplicationNumber');
-            
             if (!applicantName || applicantName.trim() === '') {
                 hiddenField.value = '';
                 APP.generatedAppNumber = null;
                 return;
             }
-            
             try {
                 const formData = new URLSearchParams({
                     action: 'get_next_number',
                     applicantName: applicantName.trim()
                 });
-
-                // Add session token if available
-                if (APP.sessionToken) {
-                    formData.append('sessionToken', APP.sessionToken);
-                }
-
+                if (APP.sessionToken) formData.append('sessionToken', APP.sessionToken);
                 const response = await fetch(SCRIPT_URL, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                     body: formData
                 });
-
                 const result = await response.json();
-
                 if (result.success && result.data) {
                     const appNumber = result.data.nextNumber;
                     hiddenField.value = appNumber;
@@ -1516,93 +2102,64 @@
                     APP.generatedAppNumber = null;
                 }
             } catch (error) {
-                console.error('Error generating application number:', error);
                 hiddenField.value = '';
                 APP.generatedAppNumber = null;
             }
         }
 
         // ============================================
-        // CROPPER - INITIALIZE
+        // CROPPER
         // ============================================
         function initCropper() {
             cropWrapperElement = document.getElementById('cropperWrapper');
             cropBoxElement = document.getElementById('cropBox');
             cropImageElement = document.getElementById('cropperImage');
-
-            // Mouse events for crop box
             cropBoxElement.addEventListener('mousedown', onCropMouseDown);
             cropBoxElement.addEventListener('touchstart', onCropTouchStart, { passive: false });
-
-            // Prevent default touch actions on wrapper
             cropWrapperElement.addEventListener('touchmove', function(e) {
                 if (cropperActive) e.preventDefault();
             }, { passive: false });
         }
 
-        // ============================================
-        // CROPPER - OPEN
-        // ============================================
         function openCropper(imageDataURL) {
             cropperActive = true;
             cropImageData = imageDataURL;
             cropImageElement.src = imageDataURL;
-
-            // Wait for image to load
             cropImageElement.onload = function() {
-                const wrapperRect = cropWrapperElement.getBoundingClientRect();
                 const imgRect = cropImageElement.getBoundingClientRect();
-                
-                // Calculate crop box size (70% of image, centered)
                 const cropSize = Math.min(imgRect.width, imgRect.height) * 0.6;
                 const cropX = (imgRect.width - cropSize) / 2;
                 const cropY = (imgRect.height - cropSize) / 2;
-                
-                // Set crop box position using percentage
                 const widthPercent = (cropSize / imgRect.width) * 100;
                 const heightPercent = (cropSize / imgRect.height) * 100;
                 const leftPercent = (cropX / imgRect.width) * 100;
                 const topPercent = (cropY / imgRect.height) * 100;
-                
                 cropBoxElement.style.left = leftPercent + '%';
                 cropBoxElement.style.top = topPercent + '%';
                 cropBoxElement.style.width = widthPercent + '%';
                 cropBoxElement.style.height = heightPercent + '%';
-                
                 cropBoxElement.dataset.imgWidth = imgRect.width;
                 cropBoxElement.dataset.imgHeight = imgRect.height;
             };
-
             document.getElementById('cropperOverlay').classList.add('show');
         }
 
-        // ============================================
-        // CROPPER - CLOSE
-        // ============================================
         function closeCropper() {
             cropperActive = false;
             document.getElementById('cropperOverlay').classList.remove('show');
         }
 
-        // ============================================
-        // CROPPER - MOUSE EVENTS
-        // ============================================
         function onCropMouseDown(e) {
             if (!cropperActive) return;
             e.preventDefault();
-            
             const target = e.target;
             if (target.classList.contains('crop-handle')) {
                 isResizing = true;
-                resizeHandle = target.className.split(' ')[1]; // nw, ne, sw, se, n, s, w, e
-            } else {
-                isDragging = true;
-            }
-            
+                resizeHandle = target.className.split(' ')[1];
+            } else { isDragging = true; }
             const rect = cropWrapperElement.getBoundingClientRect();
             cropStartX = e.clientX - rect.left;
             cropStartY = e.clientY - rect.top;
-            
             document.addEventListener('mousemove', onCropMouseMove);
             document.addEventListener('mouseup', onCropMouseUp);
         }
@@ -1610,11 +2167,9 @@
         function onCropMouseMove(e) {
             if (!cropperActive) return;
             e.preventDefault();
-            
             const rect = cropWrapperElement.getBoundingClientRect();
             const mouseX = e.clientX - rect.left;
             const mouseY = e.clientY - rect.top;
-            
             if (isDragging) {
                 moveCropBox(mouseX - cropStartX, mouseY - cropStartY);
                 cropStartX = mouseX;
@@ -1631,27 +2186,18 @@
             document.removeEventListener('mouseup', onCropMouseUp);
         }
 
-        // ============================================
-        // CROPPER - TOUCH EVENTS
-        // ============================================
         function onCropTouchStart(e) {
             if (!cropperActive) return;
             e.preventDefault();
-            
             const touch = e.touches[0];
             const target = e.target;
-            
             if (target.classList.contains('crop-handle')) {
                 isResizing = true;
                 resizeHandle = target.className.split(' ')[1];
-            } else {
-                isDragging = true;
-            }
-            
+            } else { isDragging = true; }
             const rect = cropWrapperElement.getBoundingClientRect();
             cropStartX = touch.clientX - rect.left;
             cropStartY = touch.clientY - rect.top;
-            
             document.addEventListener('touchmove', onCropTouchMove, { passive: false });
             document.addEventListener('touchend', onCropTouchEnd, { passive: false });
         }
@@ -1659,12 +2205,10 @@
         function onCropTouchMove(e) {
             if (!cropperActive) return;
             e.preventDefault();
-            
             const touch = e.touches[0];
             const rect = cropWrapperElement.getBoundingClientRect();
             const touchX = touch.clientX - rect.left;
             const touchY = touch.clientY - rect.top;
-            
             if (isDragging) {
                 moveCropBox(touchX - cropStartX, touchY - cropStartY);
                 cropStartX = touchX;
@@ -1681,51 +2225,31 @@
             document.removeEventListener('touchend', onCropTouchEnd);
         }
 
-        // ============================================
-        // CROPPER - MOVE CROP BOX
-        // ============================================
         function moveCropBox(deltaX, deltaY) {
-            const rect = cropWrapperElement.getBoundingClientRect();
             const imgRect = cropImageElement.getBoundingClientRect();
-            
             let left = parseFloat(cropBoxElement.style.left) || 0;
             let top = parseFloat(cropBoxElement.style.top) || 0;
             let width = parseFloat(cropBoxElement.style.width) || 30;
             let height = parseFloat(cropBoxElement.style.height) || 30;
-            
-            // Convert pixel delta to percentage
             const deltaXPercent = (deltaX / imgRect.width) * 100;
             const deltaYPercent = (deltaY / imgRect.height) * 100;
-            
             let newLeft = left + deltaXPercent;
             let newTop = top + deltaYPercent;
-            
-            // Constrain to wrapper bounds
             newLeft = Math.max(0, Math.min(newLeft, 100 - width));
             newTop = Math.max(0, Math.min(newTop, 100 - height));
-            
             cropBoxElement.style.left = newLeft + '%';
             cropBoxElement.style.top = newTop + '%';
         }
 
-        // ============================================
-        // CROPPER - RESIZE CROP BOX
-        // ============================================
         function resizeCropBox(mouseX, mouseY, handle) {
-            const rect = cropWrapperElement.getBoundingClientRect();
             const imgRect = cropImageElement.getBoundingClientRect();
-            
             let left = parseFloat(cropBoxElement.style.left) || 0;
             let top = parseFloat(cropBoxElement.style.top) || 0;
             let width = parseFloat(cropBoxElement.style.width) || 30;
             let height = parseFloat(cropBoxElement.style.height) || 30;
-            
-            // Convert mouse position to percentage
             const mouseXPercent = (mouseX / imgRect.width) * 100;
             const mouseYPercent = (mouseY / imgRect.height) * 100;
-            
-            const minSize = 5; // Minimum 5% of image
-            
+            const minSize = 5;
             if (handle.includes('e')) {
                 let newWidth = mouseXPercent - left;
                 newWidth = Math.max(minSize, Math.min(newWidth, 100 - left));
@@ -1752,46 +2276,32 @@
                     height = newHeight;
                 }
             }
-            
             cropBoxElement.style.left = left + '%';
             cropBoxElement.style.top = top + '%';
             cropBoxElement.style.width = width + '%';
             cropBoxElement.style.height = height + '%';
         }
 
-        // ============================================
-        // CROPPER - APPLY CROP
-        // ============================================
         function applyCrop() {
             if (!cropImageData) return;
-            
             const img = new Image();
             img.onload = function() {
-                // Get crop box dimensions in pixels
                 const left = parseFloat(cropBoxElement.style.left) || 0;
                 const top = parseFloat(cropBoxElement.style.top) || 0;
                 const width = parseFloat(cropBoxElement.style.width) || 30;
                 const height = parseFloat(cropBoxElement.style.height) || 30;
-                
                 const imgWidth = img.width;
                 const imgHeight = img.height;
-                
                 const cropX = (left / 100) * imgWidth;
                 const cropY = (top / 100) * imgHeight;
                 const cropWidth = (width / 100) * imgWidth;
                 const cropHeight = (height / 100) * imgHeight;
-                
-                // Create canvas and draw cropped image
                 const canvas = document.createElement('canvas');
                 canvas.width = cropWidth;
                 canvas.height = cropHeight;
                 const ctx = canvas.getContext('2d');
                 ctx.drawImage(img, cropX, cropY, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
-                
-                // Get cropped data URL
                 const croppedDataURL = canvas.toDataURL('image/jpeg', 0.85);
-                
-                // Convert to File
                 const base64Data = croppedDataURL.split(',')[1];
                 const byteCharacters = atob(base64Data);
                 const byteNumbers = new Array(byteCharacters.length);
@@ -1800,32 +2310,23 @@
                 }
                 const byteArray = new Uint8Array(byteNumbers);
                 const croppedBlob = new Blob([byteArray], { type: 'image/jpeg' });
-                
                 const croppedFile = new File(
                     [croppedBlob],
                     'cropped_' + (originalImageFile ? originalImageFile.name : 'photo.jpg'),
                     { type: 'image/jpeg', lastModified: Date.now() }
                 );
-                
-                // Set as attached photo
                 attachedPhotoFile = croppedFile;
                 attachedPhotoDataURL = croppedDataURL;
                 isPhotoAttached = true;
-                
-                // Update preview
                 document.getElementById('photoPlaceholder').classList.add('hidden');
                 document.getElementById('photoPreview').classList.remove('hidden');
                 document.getElementById('capturedPhoto').src = croppedDataURL;
                 document.getElementById('photoArea').classList.add('has-photo');
-                
                 const status = document.getElementById('photoStatus');
                 status.classList.add('active');
-                status.textContent = '✅ Photo cropped & attached! (Passport size: ' + Math.round(cropWidth) + 'x' + Math.round(cropHeight) + 'px)';
+                status.textContent = '✅ Photo cropped & attached!';
                 status.className = 'photo-status active attached';
-                
-                // Close cropper
                 closeCropper();
-                
                 showMessage('✅ Image cropped to passport size!', 'success');
                 setTimeout(() => hideMessage(), 2500);
             };
@@ -1833,47 +2334,29 @@
         }
 
         // ============================================
-        // CROPPER - APPLY BUTTON
+        // PHOTO FUNCTIONS
         // ============================================
-        document.getElementById('applyCropBtn').addEventListener('click', applyCrop);
-
-        // ============================================
-        // PHOTO FUNCTIONS WITH CROPPER
-        // ============================================
-        function openCamera() {
-            document.getElementById('photoInput').click();
-        }
-
-        function openGallery() {
-            document.getElementById('galleryInput').click();
-        }
+        function openCamera() { document.getElementById('photoInput').click(); }
+        function openGallery() { document.getElementById('galleryInput').click(); }
 
         async function handlePhotoAttach(event) {
             const file = event.target.files[0];
             if (!file) return;
-            
             if (!file.type.startsWith('image/')) {
                 showMessage('❌ Please select an image file.', 'error');
                 return;
             }
-            
             try {
-                // Store original
                 originalImageFile = file;
-                
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     originalImageDataURL = e.target.result;
-                    // Open cropper
                     openCropper(originalImageDataURL);
                 };
                 reader.readAsDataURL(file);
-                
             } catch (error) {
-                console.error('Error:', error);
                 showMessage('❌ Failed to load image: ' + error.message, 'error');
             }
-            
             event.target.value = '';
         }
 
@@ -1888,14 +2371,13 @@
             document.getElementById('photoPreview').classList.add('hidden');
             document.getElementById('capturedPhoto').src = '';
             document.getElementById('photoArea').classList.remove('has-photo');
-            
             const status = document.getElementById('photoStatus');
             status.classList.remove('active');
             status.textContent = '';
         }
 
         // ============================================
-        // TAB SWITCHING
+        // TAB SWITCHING / MESSAGE / LOADING
         // ============================================
         function switchTab(tab) {
             APP.currentTab = tab;
@@ -1906,77 +2388,56 @@
             hideMessage();
         }
 
-        // ============================================
-        // PASSWORD TOGGLE
-        // ============================================
         function togglePassword(inputId) {
             const input = document.getElementById(inputId);
             const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
             input.setAttribute('type', type);
         }
 
-        // ============================================
-        // MESSAGE HANDLING
-        // ============================================
         function showMessage(text, type = 'info') {
             const msg = document.getElementById('message');
             msg.textContent = text;
             msg.className = `message ${type}`;
             msg.style.display = 'block';
-            
             clearTimeout(msg._timeout);
-            msg._timeout = setTimeout(() => {
-                msg.style.display = 'none';
-            }, 5000);
+            msg._timeout = setTimeout(() => { msg.style.display = 'none'; }, 5000);
         }
+        function hideMessage() { document.getElementById('message').style.display = 'none'; }
 
-        function hideMessage() {
-            document.getElementById('message').style.display = 'none';
-        }
-
-        // ============================================
-        // LOADING STATE
-        // ============================================
         function showLoading(btnId, textId, loadingText) {
             document.getElementById(btnId).disabled = true;
             document.getElementById(textId).innerHTML = `<span class="loading"></span> ${loadingText}`;
         }
-
         function hideLoading(btnId, textId, originalText) {
             document.getElementById(btnId).disabled = false;
             document.getElementById(textId).textContent = originalText;
         }
 
         // ============================================
-        // SIGN UP
+        // SIGN UP / SIGN IN
         // ============================================
         async function handleSignUp(event) {
             event.preventDefault();
             showLoading('signupBtn', 'signupBtnText', 'Creating Account...');
             hideMessage();
-
             const name = document.getElementById('signupName').value.trim();
             const contact = document.getElementById('signupContact').value.trim();
             const password = document.getElementById('signupPassword').value;
-
             if (!name || !contact || !password) {
                 showMessage('❌ Please fill in all required fields.', 'error');
                 hideLoading('signupBtn', 'signupBtnText', 'Create Account');
                 return;
             }
-
             if (contact.length !== 10) {
                 showMessage('❌ Please enter a valid 10-digit contact number.', 'error');
                 hideLoading('signupBtn', 'signupBtnText', 'Create Account');
                 return;
             }
-
             if (password.length < 6) {
                 showMessage('❌ Password must be at least 6 characters long.', 'error');
                 hideLoading('signupBtn', 'signupBtnText', 'Create Account');
                 return;
             }
-
             try {
                 const formData = new URLSearchParams({
                     action: 'signup',
@@ -1984,101 +2445,63 @@
                     contact: contact,
                     password: password
                 });
-
                 const response = await fetch(SCRIPT_URL, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                     body: formData
                 });
-
                 const result = await response.json();
-
                 if (result.success) {
-                    showMessage(
-                        '✅ Account created successfully!\n\n' +
-                        '📋 Your account is now pending admin approval.\n' +
-                        '⏳ You will be notified once approved.\n\n' +
-                        '📞 For queries, contact your administrator.',
-                        'success'
-                    );
-                    const form = document.getElementById('signupFormElement');
-                    if (form) {
-                        form.reset();
-                    }
+                    showMessage('✅ Account created successfully!\n\n📋 Your account is now pending admin approval.', 'success');
+                    document.getElementById('signupFormElement').reset();
                 } else {
                     showMessage('❌ ' + result.message, 'error');
                 }
-
             } catch (error) {
                 showMessage('❌ Registration failed: ' + error.message, 'error');
             }
-
             hideLoading('signupBtn', 'signupBtnText', 'Create Account');
         }
 
-        // ============================================
-        // SIGN IN
-        // ============================================
         async function handleSignIn(event) {
             event.preventDefault();
             showLoading('signinBtn', 'signinBtnText', 'Signing In...');
             hideMessage();
-
             const mobile = document.getElementById('signinMobile').value.trim();
             const password = document.getElementById('signinPassword').value;
-
             if (!mobile || !password) {
                 showMessage('❌ Please enter mobile number and password.', 'error');
                 hideLoading('signinBtn', 'signinBtnText', 'Sign In');
                 return;
             }
-
             if (mobile.length !== 10) {
                 showMessage('❌ Please enter a valid 10-digit mobile number.', 'error');
                 hideLoading('signinBtn', 'signinBtnText', 'Sign In');
                 return;
             }
-
             try {
                 const formData = new URLSearchParams({
                     action: 'signin',
                     contact: mobile,
                     password: password
                 });
-
                 const response = await fetch(SCRIPT_URL, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                     body: formData
                 });
-
                 const result = await response.json();
-
                 if (!result.success) {
                     if (result.status === 'pending') {
-                        showMessage(
-                            '⏳ Your account is pending approval.\n\n' +
-                            'Please wait for admin to approve your account.\n' +
-                            'Contact administrator for more information.',
-                            'warning'
-                        );
+                        showMessage('⏳ Your account is pending approval.\n\nPlease wait for admin approval.', 'warning');
                     } else if (result.status === 'rejected') {
-                        showMessage(
-                            '❌ Your account has been rejected.\n\n' +
-                            'Please contact administrator for more information.',
-                            'error'
-                        );
+                        showMessage('❌ Your account has been rejected.\n\nPlease contact administrator.', 'error');
                     } else {
                         showMessage('❌ ' + result.message, 'error');
                     }
                     hideLoading('signinBtn', 'signinBtnText', 'Sign In');
                     return;
                 }
-
                 const userData = result.data;
                 APP.currentUser = {
                     name: userData.name,
@@ -2087,59 +2510,48 @@
                     slNo: userData.slNo
                 };
                 APP.sessionToken = userData.sessionToken;
-
                 localStorage.setItem('sessionToken', APP.sessionToken);
                 localStorage.setItem('currentUser', JSON.stringify(APP.currentUser));
-
                 showDashboard();
                 loadBankData();
+                fetchSummary();
+                setTimeout(startSync, 1000);
                 showMessage('✅ Welcome back, ' + userData.name + '!', 'success');
-
             } catch (error) {
                 showMessage('❌ Login failed: ' + error.message, 'error');
             }
-
             hideLoading('signinBtn', 'signinBtnText', 'Sign In');
         }
 
         // ============================================
-        // DASHBOARD - COMPACT VERSION
+        // DASHBOARD / SIGNOUT
         // ============================================
         function showDashboard() {
             document.getElementById('authSection').classList.add('hidden');
             document.getElementById('dashboardSection').classList.remove('hidden');
-            
             if (APP.currentUser) {
                 const initial = APP.currentUser.name.charAt(0).toUpperCase();
                 document.getElementById('userAvatarCompact').textContent = initial;
                 document.getElementById('userNameCompact').textContent = APP.currentUser.name;
                 document.getElementById('userContactCompact').textContent = '📱 ' + APP.currentUser.contact;
                 document.getElementById('welcomeNameCompact').textContent = APP.currentUser.name;
-                
                 const statusBadge = document.getElementById('userStatusBadgeCompact');
                 const status = APP.currentUser.status || 'Pending';
                 statusBadge.textContent = status;
                 statusBadge.className = 'user-status-compact ' + status.toLowerCase();
             }
+            updateSyncStatus();
         }
 
-        // ============================================
-        // SIGN OUT
-        // ============================================
         function handleSignOut() {
             localStorage.removeItem('sessionToken');
             localStorage.removeItem('currentUser');
             APP.currentUser = null;
             APP.sessionToken = null;
-            
             document.getElementById('dashboardSection').classList.add('hidden');
             document.getElementById('authSection').classList.remove('hidden');
-            
-            const signinForm = document.getElementById('signinFormElement');
-            if (signinForm) signinForm.reset();
-            const signupForm = document.getElementById('signupFormElement');
-            if (signupForm) signupForm.reset();
-            
+            document.getElementById('signinFormElement').reset();
+            document.getElementById('signupFormElement').reset();
             showMessage('👋 Signed out successfully!', 'info');
         }
 
@@ -2148,32 +2560,29 @@
         // ============================================
         function showDataEntry() {
             const section = document.getElementById('dataEntrySection');
-            section.classList.toggle('hidden');
-            if (!section.classList.contains('hidden')) {
-                // Clear previous values
+            if (section.classList.contains('hidden')) {
+                section.classList.remove('hidden');
                 document.getElementById('uniqueApplicationNumber').value = '';
                 APP.generatedAppNumber = null;
                 document.getElementById('applicantNameInput').value = '';
                 removePhoto();
                 document.getElementById('ifscInput').classList.remove('auto-generated');
-                
-                const nameField = document.getElementById('nameAsPerECI');
-                const guardianField = document.getElementById('guardianAsPerECI');
-                if (nameField) {
-                    nameField.value = '';
-                    nameField.className = '';
-                    nameField.placeholder = 'Auto-fills from EPIC';
-                }
-                if (guardianField) {
-                    guardianField.value = '';
-                    guardianField.className = '';
-                    guardianField.placeholder = 'Auto-fills from EPIC';
-                }
-                const epicInput = document.getElementById('epicNumber');
-                if (epicInput) epicInput.value = '';
+                document.getElementById('nameAsPerECI').value = '';
+                document.getElementById('nameAsPerECI').className = '';
+                document.getElementById('nameAsPerECI').placeholder = 'Auto-fills from EPIC';
+                document.getElementById('guardianAsPerECI').value = '';
+                document.getElementById('guardianAsPerECI').className = '';
+                document.getElementById('guardianAsPerECI').placeholder = 'Auto-fills from EPIC';
+                document.getElementById('epicNumber').value = '';
+                const branchSelect = document.getElementById('branchSelect');
+                while (branchSelect.options.length > 1) branchSelect.remove(1);
+                setTimeout(() => {
+                    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 100);
+            } else {
+                section.classList.add('hidden');
             }
         }
-
         function hideDataEntry() {
             document.getElementById('dataEntrySection').classList.add('hidden');
             document.getElementById('dataEntryForm').reset();
@@ -2182,60 +2591,48 @@
             document.getElementById('ifscInput').value = '';
             document.getElementById('ifscInput').classList.remove('auto-generated');
             removePhoto();
-            
             const branchSelect = document.getElementById('branchSelect');
-            while (branchSelect.options.length > 1) {
-                branchSelect.remove(1);
-            }
+            while (branchSelect.options.length > 1) branchSelect.remove(1);
         }
 
         // ============================================
-        // SUBMIT JOB CARD DATA WITH CROPPED IMAGE
+        // SUBMIT JOB CARD DATA
         // ============================================
         async function submitJobCardData(event) {
             event.preventDefault();
             const btn = document.getElementById('dataSubmitBtn');
             const btnText = document.getElementById('dataSubmitBtnText');
-            
-            showLoading('dataSubmitBtn', 'dataSubmitBtnText', 'Uploading & Submitting...');
+            showLoading('dataSubmitBtn', 'dataSubmitBtnText', 'Processing...');
             hideMessage();
 
             const form = event.target;
             const formData = new FormData(form);
             const data = {};
-            formData.forEach((value, key) => {
-                data[key] = value;
-            });
+            formData.forEach((value, key) => { data[key] = value; });
 
-            // Check if application number is generated (from hidden field)
             if (!data.UNIQUE_APPLICATION_NUMBER || data.UNIQUE_APPLICATION_NUMBER.trim() === '') {
-                showMessage('❌ Please enter applicant name first. Application number is required.', 'error');
+                showMessage('❌ Please enter applicant name first.', 'error');
                 hideLoading('dataSubmitBtn', 'dataSubmitBtnText', 'Submit Entry');
                 return;
             }
-
             if (!isPhotoAttached || !attachedPhotoFile) {
-                showMessage('❌ Please attach and crop a photo before submitting.', 'error');
+                showMessage('❌ Please attach and crop a photo.', 'error');
                 hideLoading('dataSubmitBtn', 'dataSubmitBtnText', 'Submit Entry');
                 return;
             }
 
             try {
-                // Convert cropped image to Base64
                 const reader = new FileReader();
                 const base64Promise = new Promise((resolve, reject) => {
                     reader.onload = function(e) {
                         const base64 = e.target.result.split(',')[1];
                         resolve(base64);
                     };
-                    reader.onerror = function(e) {
-                        reject(e.target.error);
-                    };
+                    reader.onerror = function(e) { reject(e.target.error); };
                 });
                 reader.readAsDataURL(attachedPhotoFile);
                 const base64Image = await base64Promise;
                 
-                // Upload photo
                 const appNumber = data.UNIQUE_APPLICATION_NUMBER;
                 const fileName = appNumber + '.jpg';
                 
@@ -2252,7 +2649,6 @@
                     method: 'POST',
                     body: uploadParams
                 });
-                
                 const uploadResult = await uploadResponse.json();
                 
                 if (!uploadResult.success) {
@@ -2265,19 +2661,15 @@
                 data.DATA_ENTRY_OPERATOR = APP.currentUser.name;
                 data.action = 'submit_data';
                 data.sessionToken = APP.sessionToken;
-                
-                // Submit form data
+
                 const params = new URLSearchParams(data);
                 const response = await fetch(SCRIPT_URL, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                     body: params
                 });
-
                 const result = await response.json();
-
+                
                 if (result.success) {
                     showMessage('✅ Data submitted successfully!', 'success');
                     form.reset();
@@ -2287,19 +2679,20 @@
                     document.getElementById('ifscInput').classList.remove('auto-generated');
                     removePhoto();
                     hideDataEntry();
-                    
                     const branchSelect = document.getElementById('branchSelect');
-                    while (branchSelect.options.length > 1) {
-                        branchSelect.remove(1);
-                    }
+                    while (branchSelect.options.length > 1) branchSelect.remove(1);
+                    fetchSummary();
+                    setTimeout(startSync, 1000);
                 } else {
-                    showMessage('❌ ' + result.message, 'error');
+                    addPendingEntry(data);
+                    showMessage('⚠️ Saved offline. Will sync when online.', 'warning');
+                    hideDataEntry();
                 }
-
             } catch (error) {
-                showMessage('❌ Submission failed: ' + error.message, 'error');
+                addPendingEntry(data);
+                showMessage('⚠️ Network error. Entry saved offline. Will sync later.', 'warning');
+                hideDataEntry();
             }
-
             hideLoading('dataSubmitBtn', 'dataSubmitBtnText', 'Submit Entry');
         }
 
@@ -2313,32 +2706,26 @@
             document.getElementById('confirmPassword').value = '';
             hideMessage();
         }
-
         function closePasswordModal() {
             document.getElementById('passwordModal').classList.remove('show');
         }
-
         async function handleChangePassword(event) {
             event.preventDefault();
             showLoading('changePwdBtn', 'changePwdBtnText', 'Updating...');
             hideMessage();
-
             const currentPassword = document.getElementById('currentPassword').value;
             const newPassword = document.getElementById('newPassword').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
-
             if (newPassword !== confirmPassword) {
                 showMessage('❌ New passwords do not match.', 'error');
                 hideLoading('changePwdBtn', 'changePwdBtnText', 'Update Password');
                 return;
             }
-
             if (newPassword.length < 6) {
                 showMessage('❌ Password must be at least 6 characters.', 'error');
                 hideLoading('changePwdBtn', 'changePwdBtnText', 'Update Password');
                 return;
             }
-
             try {
                 const formData = new URLSearchParams({
                     action: 'change_password',
@@ -2346,36 +2733,41 @@
                     oldPassword: currentPassword,
                     newPassword: newPassword
                 });
-
                 const response = await fetch(SCRIPT_URL, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                     body: formData
                 });
-
                 const result = await response.json();
-
                 if (result.success) {
                     showMessage('✅ Password changed successfully!', 'success');
                     closePasswordModal();
                 } else {
                     showMessage('❌ ' + result.message, 'error');
                 }
-
             } catch (error) {
                 showMessage('❌ Password change failed: ' + error.message, 'error');
             }
-
             hideLoading('changePwdBtn', 'changePwdBtnText', 'Update Password');
         }
 
-        // ============================================
-        // OTHER FUNCTIONS
-        // ============================================
         function viewMyEntries() {
-            showMessage('📊 Your entries will appear here.', 'info');
+            const entries = APP.cachedData.entries || [];
+            if (entries.length === 0) {
+                showMessage('📊 No entries found. Start by adding a new entry.', 'info');
+                return;
+            }
+            let message = `📊 Total Entries: ${entries.length}\n\n`;
+            const recent = entries.slice(-5).reverse();
+            recent.forEach((entry, i) => {
+                const name = entry['NAME OF APPLICANT OF JOB CARD'] || 'Unknown';
+                const appNo = entry['UNIQUE APPLICATION NUMBER'] || '';
+                message += `${i+1}. ${name} - ${appNo}\n`;
+            });
+            if (entries.length > 5) {
+                message += `\n... and ${entries.length - 5} more entries`;
+            }
+            showMessage(message, 'info');
         }
 
         function showHelp() {
@@ -2383,30 +2775,31 @@
                 '❓ Help & Support\n\n' +
                 '📌 New users: Sign up and wait for admin approval\n' +
                 '📌 Approved users: Can submit job card entries\n' +
-                '📌 Application number auto-generates in the background based on applicant name\n' +
-                '📌 Format: JKS/BGP/NAME (with suffix _2, _3 for duplicates)\n' +
-                '📌 Enter EPIC number - it will auto-fill Name & Guardian from SIR sheet\n' +
-                '📌 Tap "Camera" or "Gallery" to select photo\n' +
-                '📌 Then CROP the photo to passport size by dragging the box\n' +
-                '📌 Drag corners to resize, drag center to reposition\n' +
-                '📌 Click "Apply Crop" when satisfied\n' +
-                '📌 Bank details are loaded from the BANKS sheet',
+                '📌 Application number auto-generates based on applicant name\n' +
+                '📌 Enter EPIC number - auto-fills Name & Guardian\n' +
+                '📌 Tap "Camera" or "Gallery" to select photo, then CROP\n' +
+                '📌 Summary shows total & caste-wise counts with colors\n' +
+                '📌 Offline mode: Entries saved locally, sync when online',
                 'info'
             );
         }
 
+        // ============================================
+        // MODAL HANDLERS
+        // ============================================
         document.getElementById('passwordModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closePasswordModal();
-            }
+            if (e.target === this) closePasswordModal();
+        });
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && cropperActive) closeCropper();
         });
 
-        // Close cropper with Escape key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && cropperActive) {
-                closeCropper();
+        // Periodic sync every 30 seconds
+        setInterval(() => {
+            if (APP.isOnline && APP.sessionToken) {
+                startSync();
             }
-        });
+        }, 30000);
     </script>
 </body>
 </html>
